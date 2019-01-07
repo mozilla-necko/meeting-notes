@@ -1,0 +1,1 @@
+This tool uses code from the etherpad-lite codebase to parse an export of an etherpad document. When passed an export, it will look for changesets that are not changed for at least 24 hours (stable changesets) which are then exported to separate files.

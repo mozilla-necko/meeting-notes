@@ -1,0 +1,126 @@
+2017-10-13
+
+NECKO WEEKLY MEETING NOTES
+
+Thurs October 12th, 2017
+
+-----------------------------------------------
+TRIAGE
+- Triage duty: Valentin
+- Note: use these 2 queries when you're on triage duty: all bugs should be [necko-triaged] and have a priority
+  - UNTRIAGED bugs: https://mzl.la/2wAv7XZ
+  - MALFORMED bugs (have necko-triaged but no priority): https://mzl.la/2xXf2jc
+
+- P1 bugs (active):  https://mzl.la/2he1C85
+- P2 bugs (next)       https://mzl.la/2yaD1aO)
+- P3 bugs  (backlog) https://mzl.la/2xcYzEL
+- P5 bugs (would take): https://mzl.la/2hdnQXy
+
+- Triage Notes
+    - Android crashes on infra are currently not symbolicated: https://bugzilla.mozilla.org/show_bug.cgi?id=1389805 (makes triaging/diagnosing android crash bugs hard/impossible)
+
+----------------------------------------------
+Round Table:
+*Triage
+*Interleave Taipei and the res
+*32 unprioritized bugs
+*Collapsing all necko-XXX tags into a single "necko-triaged"
+*Hold off on using P1 for non 57  bugs for now
+*Register for Austin
+
+
+----------------------------------------------
+
+Nick
+
+Honza
+
+Michal
+ - profiling RCWN
+ - 1401224 Assertion failure: aLength > 0 (Writing a zero-sized chunk), at image/SourceBuffer.cpp:348
+ - 1403010 Crash due to race condition in CacheFileMetadata::SizeOfExcludingThis when reading or writing metadata  
+ - 1405306 Remove unused code in CacheFile::OnFileDoomed
+ - 1394564 Version 55 breaks sending large amounts of data over web sockets.
+
+
+Patrick
+  last week: mpendingq, 256fd telemetry, 0.9 telemetry, namespaces, neat tls, alt-svc, immutable bug, some non-necko stuff
+  this week: neat tls, alt-svc, immutable bug, some non-necko stuff. more reviews.
+
+Daniel
+ - TLS 1.3-checking (to be system-) add-on
+ - fixed two "copy as cURL" bugs
+ - QUIC interim in Seattle October 4-5 from remote
+ - Bug 1395914 - IPv6 network identification (Linux OK, mac version to be fixed, Windows pending)
+
+Valentin
+Bug 1405961 - Assertion failure: !aStamp.IsNull() PerformanceNavigationTiming
+Bug 1394906 - Implement immutable, threadsafe MozURL
+Bug 1407540 - MozURL should support base url in the CTOR
+reviews
+MozURL wrapper implementing nsIURI
+RCWN debugging
+
+Dragana
+425 Too Early
+103 Early Hint
+security bug, crash
+NEAT
+TFO
+rel=preload
+
+
+Gary
+Bug 1373708 - Convert Jar channels to stop using main thread I/O
+- all tests fix are landed
+- measuring performance
+Bug 1391356 - Convert JAR channel clients that use Open to use AsyncOpen
+- investigating
+
+Junior
+Bug 870460 - Lazy load of cookie service blocks main thread while cookie database loads
+ - r+(nick), r?(jdm)
+frame issue webrtc
+    
+Amy
+Bug 1399590 - Intermittent PROCESS-CRASH | Main app process exited normally | application crashed [@ nsPermissionManager::CommonTestPermissionInternal(nsIPrincipal *,nsIURI *,char const *,unsigned int *,bool,bool)] after Assertion: PermissionAvaliable(prin, aType)
+*landed
+Bug 1360603 - Mark Save as... channels used for download as throttleable
+*landed
+Bug 1286858 - Modify nsCookie*, interfaces and storage to include the SameSite attribute
+*Rebased and landed.
+Bug 1403737 - On upgrade from 56 Beta to 57 Beta all sessions were invalidated
+*Can't reproduce.
+
+
+Kershaw
+Bug 1404804 - Tracking black list is checked twice when TP is enabled
+ - WIP
+
+Bug 1389037 - Getting connection timeouts after downloading some Blobs and switching tab
+ - HTTP log needed
+
+SC
+[PBg-Http]
+ - Bug 1381434 - use HTTP OMT data delivery while loading fontface
+  - landed on firefox 58
+   - 99% is OMT now
+   - telemetry: https://mzl.la/2yruvIZ
+[Socket Process]
+ - broad review on all the usage of Socket Transport Thread
+  - HTTP/FTP/NSS
+  - WebRTC
+  - TCPSocket/UDPSocket
+  - other things use STS to poll fd (e.g. mDNS on mac)
+  - other things use STS as an EventTarget
+[Others]
+ - Bug 1396395 - Firefox crashes when submitting form
+  - suspend/resume during async open + sync XHR, causing resume stream reading again before OnStartRequest is finished along the listener chain
+  - landed on firefox 58 and try uplifting to 57.
+ - Bug 1402417 - Intermittent LeakSanitizer | leak at mozilla::net::RequestContextService::GetRequestContext, mozilla::net::NeckoParent::RecvRequestContextLoadBegin, mozilla::net::PNeckoParent::OnMessageReceived
+  - try bisecting test cases
+ - Bug 1372065 - fix cppcheck linter error in Necko
+  - minor fix landed on firefox 58
+ - log analysis
+  - Bug 1405173 - Big delay for making the initial connection to Google Docs (using cached IPv6 address for backup connection stream)
+  - Bug 1337783 - Assertion failure: !mTrackingScripts.Contains(aURL), at nsDocument.cpp:3035

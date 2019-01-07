@@ -1,0 +1,57 @@
+
+Thurs Oct 25, 2018
+
+Round Table:
+
+* shutdown hang - got review for a new shutdown timeout, will probably land today, will uplift to beta
+
+Nick
+
+* Started work on racing connections (actual race, not the 250ms backup conn)
+
+* Did some research on alt-svc in the wild (see [https://bugzilla.mozilla.org/show_bug.cgi?id=1498663#c1](https://bugzilla.mozilla.org/show_bug.cgi?id=1498663#c1))
+
+* Updated h2ws patch
+
+* WeChat’s h2 bugs ([https://bugzilla.mozilla.org/show_bug.cgi?id=1500743](https://bugzilla.mozilla.org/show_bug.cgi?id=1500743))
+
+* Reviews, etc (the usual miscellaney)
+
+Michal
+
+* 1479356 browser.cache.disk.capacity allows values over 2097152 but the cache gets capped at 2 GiB
+
+* 1479357 Specific values for browser.cache.disk.capacity do break the cache
+
+* 1421342 Edit and Resend "Request headers" not working as expected
+
+* 1500533 Ensure that TLS session tickets are only consumed if storage checks on the channel pass
+
+Kershaw
+
+* Bug 1484947 - SSL errors completely freeze any requests in all tabs
+
+    * working
+
+* Bug 1219935 - Startup very slow when set to use auto proxy configuration using pac file
+
+    * landed
+
+Junior
+
+* [Bug 1494364 - Frequent "Unable to connect" when using automatic proxy configuration URL](https://bugzilla.mozilla.org/show_bug.cgi?id=1494364)
+
+* [Bug 1424076 - Enable network.http.sendOriginHeader by default](https://bugzilla.mozilla.org/show_bug.cgi?id=1424076)
+
+* [Bug 1499138 - Intermittent GECKO(1008) | Assertion failure: OnSocketThread(), at /builds/worker/workspace/build/src/netwerk/protocol/http/HttpBackgroundChannelChild.cpp:124](https://bugzilla.mozilla.org/show_bug.cgi?id=1499138)
+
+Honza
+
+* working on backtrack, instrumented a ton of queues
+
+* [https://bugzilla.mozilla.org/show_bug.cgi?id=1500346](https://bugzilla.mozilla.org/show_bug.cgi?id=1500346) 
+
+    * selena’s wondering about private data sharing
+
+* * *
+

@@ -1,0 +1,9 @@
+
+Thurs Oct 18, 2018
+
+Round Table:
+
+* [Bug 149935](https://bugzilla.mozilla.org/show_bug.cgi?id=1499356)6 - Incorrect header combining (flattening?)
+
+* * *
+

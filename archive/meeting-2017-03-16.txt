@@ -1,0 +1,114 @@
+2017-03-16
+
+NECKO WEEKLY MEETING NOTES
+
+Thurs March 16 2017
+STICKY
+- Triage duty: dragana
+-  new untriaged bugs: https://tinyurl.com/zhk9yjf
+- NECKO-ACTIVE bugs: https://tinyurl.com/j8pj35u
+- NECKO NEXT bugs: https://tinyurl.com/zjwjfee
+- NECKO-BACKLOG bugs:  https://tinyurl.com/hpkcxx3
+
+Round Table:
+
+
+---PROJECT UPDATES---
+    - rust-url meeting notes: https://public.etherpad-mozilla.org/p/mozloha-rust-url
+    - rcwn https://public.etherpad-mozilla.org/p/mozaloha-rcwn
+    - service workers https://public.etherpad-mozilla.org/p/mozaloha-sw-necko
+
+QUIC  (Pat, Dragana, Daniel)
+
+
+Race-Cache-with-Network (Michal, Valentin, Junior)
+- Landed telemetry for time load difference
+- Next: racing logic + improvement telemetry
+
+Context-Driven Priority  (Honza, Kershaw, Amy, Gary, Nick)
+- maybe we should give this a read? http://web.mit.edu/ravinet/www/polaris_nsdi16.pdf
+
+PBackgroundHttp (SC, NIck)
+
+
+Nick
+- h2 coalescing rework (as a prereq for...)
+- h2 ORIGIN
+
+Honza
+
+Michal
+- 1342722 Firefox cache used all available inodes on the system
+- 1342366 Crash in nsWyciwygChannel::GetCharsetAndSource
+- 832157 Browser considerable slowdown after reaching cache limit
+- 1347948 Report time that channel spent suspended between AsyncOpen and OnStartRequest
+
+Patrick
+  last week: mpendingq, 256fd telemetry, 0.9 telemetry, namespaces, neat tls, alt-svc, immutable bug, some non-necko stuff
+  this week: neat tls, alt-svc, immutable bug, some non-necko stuff. more reviews.
+
+Daniel
+   NEAT
+
+Valentin
+Bug 1341343 - Unable to load from alternate data after re-saving it.
+RCWN frontend (prefs + logic + bugs)
+Bug 1326175 - crash in LoadHostFilters
+
+Dragana
+NEAT
+SDT
+Bug 1347951 - Checking CanDirectlyActivate() is missing in DispatchSpdyPendingQ
+Bug 1344171 - Improve connection management
+Bug 1341572 -       Fix multiple HalfOpen socket for a single transaction
+Bug 1346368 - Crash in IPCError-browser | PNecko::Msg_PHttpChannelConstructor Value error: message was deserialized, but contained an illegal
+
+Gary
+Bug 1339021 - PAC file using myip isInNet does not parse correctly resulting in no browsing possible
+Bug 1344670 - Permafailure on aurora as beta simulation /2dcontext/transformations/2d.transformation.transform.multiply.html | application crashed [@ mozilla::net::nsSocketTransport::InitiateSocket]
+
+Junior
+Bug 1338675 - Intermittent netwerk/test/unit/test_bug482934.js | - 2152857618 == 0
+Bug 1325091 - Add flag indicating presence of alternative data in the cache entry to cache index
+- WIP with a r-
+
+Amy
+Bug 1319403 - deleting session cookies
+*landed
+*approval-mozilla-aurora+
+Bug 1312774 - Allow channels marked as "urgentStart" to bypass connection limits
+*r?
+Bug 1331680 - Consider not doing sync IPC for document.cookie getter/setter
+*Implementing
+
+Kershaw
+[CDP]
+Bug 1312782 -       Implement "B" and "C" slots in the HTTP transaction dequeue logic
+ - Address comments from the last review
+
+Bug 1309653 - Give Necko the right notifications on active tab change and navigation start
+- r+
+- ready to land
+
+Bug 1326339 - Let nsHttpConnectionMgr be aware of the active tab
+- r+
+- ready to land
+
+[httpd.js]
+Bug 469228 -  Support keep-alive connections in httpd.js
+- With chunked encoding being disabled, some reftest fails are gone
+- Still have other failures need to figure out
+
+[Labeling]
+Bug 1339676 -       Labeling runnables in netwerk/
+- 7 bugs filed
+- Start working
+
+SC
+[HttpChannel]
+- PBackground-ify HttpChannel IPC
+ - Bug 1320744 - HttpChannelChild should implement nsIThreadRetargetableRequest
+  - implement multiple thread ChannelEventQueue RunOrEnqueue/Suspend/Resume/FlushQueue
+  - fixing test case failures, mainly related to service worker and/or diversion
+  - hit bug 1345319 (NS_DispatchToCurrentThread cannot be called on a thread pool)
+

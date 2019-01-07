@@ -1,0 +1,65 @@
+2016-03-17
+
+NECKO WEEKLY MEETING NOTES
+
+Thurs March 17, 2016
+
+Round Table:
+- Prague work week
+- London--book your travel
+*- Triaging new bugs: http://tinyurl.com/z26p7g3
+- NECKO-ACTIVE bugs: http://tinyurl.com/j8pj35u
+- NECKO-BACKLOG bugs:  http://tinyurl.com/hpkcxx3
+- DNS refresh on certain cache flags
+- ntclose etc bugs, what is the status?
+- shutdown watchdog, can we suggest improvements?
+
+Nick
+*1016628 - predictor prefetch - bug in testing, working w/rr to fix
+*1170928 - crash when doing CONNECT over h2 proxy - still investigating (finally got rr working - digging into assertions hitting before the crash)
+*node-http2 - did some work answering questions & merging a couple small PRs
+
+Honza
+backtrack
+Bug 1251130 -       Intermittent test_caches.html | application crashed, blocks fix for cache2 shutdown crashes (needs to be discussed)
+
+
+Michal
+ - 1251130 Shutdown crash
+ - 1253883 AddressSanitizer: heap-use-after-free in cache2 code
+
+Patrick
+- websockets/h2 coalesce
+- new pollable event
+- h2 reject pushes associated with pushes
+
+cache changes for 4xx
+Bug Triage
+Roxana
+
+Daniel
+ - HTTP Workshop 2016
+ - 
+
+
+Valentin
+Bug 1247982 - nsTArray_Impl<T>::RemoveElementsAt | nsHttpRequestHead
+Bug 1254061 - Segmentation fault. ParseInt64 nsHttpResponseHead
+*- nsTransaction getting released while we're using it?
+*- could be the reason for a lot of our crashes
+Bug 1151899 - rust-url
+*- figuring out a few parsing differences
+Bug 1180145 - Resource timing no-cors
+*- got review from bz. He identified corner cases that complicate the problem
+rebased bug 837248
+
+
+
+Dragana
+Bug 1248358 -       SG TCP Optimizer make Firefox very slow         
+Bug 1125916 -       e10s: new security API: replace SerializedLoadContext with LoadInfo - Check if they match
+Bug 1158189 -       shutdownhang in mozilla::net::nsHttpConnectionMgr::Shutdown()
+Bug 1248358 -       Experimental TCP auto tuning makes firefox event pipe unusable
+Bug 1230462 -       New string for subsresource authentication
+Bug 1246956 -       Stealing of URL cross-domain using performance.getEntries() after restore previous session
+

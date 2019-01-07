@@ -1,0 +1,22 @@
+
+December 5, 2018 - All Hands
+
+Round Table
+
+* Necko 2019 Roadmap [https://docs.google.com/document/d/1NhuuBRkokNoXucp6wPDA1KAvhfoh5IliAVjVnYy0OQg/edit](https://docs.google.com/document/d/1NhuuBRkokNoXucp6wPDA1KAvhfoh5IliAVjVnYy0OQg/edit) 
+
+* Daniel’s Note [https://docs.google.com/document/d/19csJQFdybnfQTTCOnf6CuMsiNtCreJteVM5DPIVp_Jw/edit](https://docs.google.com/document/d/19csJQFdybnfQTTCOnf6CuMsiNtCreJteVM5DPIVp_Jw/edit)
+
+Dragana
+
+* necko and mobile
+
+* what is pocket doing? 
+
+* nalexander - consult for details on what network stacks other than necko we are using for: 
+
+    * Firefox for Android
+
+    * Focus for Android
+
+    * FirefoxLite for Android

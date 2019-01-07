@@ -1,0 +1,117 @@
+2018-06-08
+
+*NECKO WEEKLY MEETING NOTES
+
+Thurs April 26 2018
+
+-----------------------------------------------
+TRIAGE: see https://public.etherpad-mozilla.org/p/necko-triage-guide for how-to
+
+Nick 
+Honza
+Michal 
+Daniel
+Valentin <<<<<===== June 8 to June 15
+//  (skip Dragana till she's back full-time)
+
+----------------------------------------------
+Round Table:
+
+- Kershaw (Berlin, July 1st), Junior (Portland, July 15th)
+
+
+----------------
+Nick
+- h2 crash 1 - r+, awaiting sec-approbal
+- h2 crash 2 - seems to be enterprisey (good number during week, not so much on weekend), waiting/hoping for input from outside
+- h2 trailers - patch first round written, waiting for third-party endpoint to test against
+- server-timing - made it https-only
+- cookie limiting & batch eviction - in progress
+- h2 websockets - starting soon
+- predictor prefetch - waiting on yoathrizon
+
+Honza
+ni? 1463729 (fast net, slow logging IO -> hang socket thread in an endless loop, h2)
+smb proxy bypass - ni? valentin
+
+Michal
+ - 1466577
+ - 1342899 websocket failed connections are stacked up?
+ - 1460879 Non-secure WebSocket through proxy that does not support Upgrade fails
+ - 756165 Return close code 1015 to JS when TLS setup fails
+
+Patrick
+  last week: mpendingq, 256fd telemetry, 0.9 telemetry, namespaces, neat tls, alt-svc, immutable bug, some non-necko stuff
+  this week: neat tls, alt-svc, immutable bug, some non-necko stuff. more reviews.
+
+Daniel
+ - TRR stuff
+ - bug 1452436 TRR resolved addresses and websockets timeouts
+
+Valentin
+Bug 1454100 - Cookies like to move around [waiting for data-review]
+Bug 1450199 - Cookie is not synced across tabs [landed & uplifted]
+Bug 1423495 - Implement PerformanceServerTiming interface [landed]
+Bug 1412081 - tor & file://
+threadsafe URI followups (remove unneeded code)
+reviews for bug 1447931 - IO activity tracker
+
+Dragana
+http-auth dialog
+UnknownDecoder crash
+TFO
+QUIC
+NEAT
+
+
+
+
+-----------
+Gary
+Bug 1373708 - Convert Jar channels to stop using main thread I/O
+- landed to mozilla-inbound
+
+Junior
+Bug 1363284 - Allow some sharing of connections with different anonymous attributes
+- has a simple test, handling ntlm
+
+Amy
+Batch Eviction
+*Had confirmed the algorithm with Josh and Martin.
+*Martin had sent the mail to discuss the algorithm with Mike West.
+Bug 1425031 - Firefox Quantum blocks cookies when JavaScript updates them
+*Found the root cause.
+*Started to create a mochitest for this bug.
+Bug 1426471 - Cookies set via JS during anonymous screenshoting override real cookies
+*Can't reproduce.
+
+Kershaw
+Bug 1413999 - Add support for Server-Timing HTTP trailing header
+*-Landed
+Bug 1423495 - Implement PerformanceServerTiming interface
+*- backed out due to WPT failure
+Bug 1428250 - Add an API to read HTTP trailers
+*- Working
+
+SC
+[Socket Process]
+- no progress this week on my part
+[Others]
+- Bug 1426751 - Intermittent eventsource-close.htm | application crashed [@ mozilla::net::ChannelEventQueue::FlushQueue] (Assertion failure: !mFlushing, at netwerk/ipc/ChannelEventQueue.cpp:46)
+ - multiple threads trying to flush ChannelEventQueue at the same time
+ - need to check and set flag at single critical section
+ - r+’ed and landed on m-c
+- security bug
+ - discussing my proposal with @mayhemer on bugzilla
+ - trying @mayhemer's suggestion and upload my WIP, debugging test failure while running mochitest 
+ 
+ Will Wang
+[Back Pressure]
+Bug 1280629 - e10s breaks necko back pressure
+*- discussion, tracing code
+*- going to discuss the experiment for min/max queue size
+
+Cervantes
+[Socket Process]
+- patch rebase and breakage fixes
+- working on pref system

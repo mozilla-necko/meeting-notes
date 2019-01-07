@@ -1,0 +1,109 @@
+2017-09-14
+
+NECKO WEEKLY MEETING NOTES
+
+Thurs Sept 14th, 2017
+STICKY
+- Triage duty: nwgh
+-  new untriaged bugs: https://tinyurl.com/zhk9yjf
+- NECKO-ACTIVE bugs: https://tinyurl.com/j8pj35u
+- NECKO NEXT bugs: https://tinyurl.com/zjwjfee
+- NECKO-BACKLOG bugs:  https://tinyurl.com/hpkcxx3
+- Triage Notes
+    - Android crashes on infra are currently not symbolicated: https://bugzilla.mozilla.org/show_bug.cgi?id=1389805 (makes triaging/diagnosing android crash bugs hard/impossible)
+
+Round Table:
+*57 Nightly, Beta milestones   https://docs.google.com/document/d/1jeypuqBqEyIh-4qxXT0UnE2aVjetN7uVD8W7L7TbWKg/edit
+
+*(15:48:00) annevk: if y'all have meetings, could you bring up fixing https://bugzilla.mozilla.org/show_bug.cgi?id=1363284 as part of some Quantum effort
+*(15:48:28) annevk: we even have Google devrel volunteering to draw up graphics how it makes Firefox faster than Chrome
+*(15:49:05) annevk: https://twitter.com/annevk/status/901493567855710208
+
+----------------
+
+Nick
+
+Honza
+
+Michal
+ - 1392841 Enable RCWN on Nightly
+ - 1398847 Enabling RCWN causes tp6_facebook regression
+ - 1397593 Intermittent /content-security-policy/inside-worker/dedicated-inheritance.html | application crashed [@ mozilla::net::HttpBaseChannel::DoNotifyListener()]
+ - 1393298 Intermittent /content-security-policy/inside-worker/dedicated-inheritance.html | application crashed [@ mozilla::net::nsHttpChannel::CallOnStartRequest()]
+ - 1398941 test_race_cache_with_network.js test is failing after landing bug 1398847
+ - 1399802 race only when disk storage is used
+
+Patrick
+  last week: mpendingq, 256fd telemetry, 0.9 telemetry, namespaces, neat tls, alt-svc, immutable bug, some non-necko stuff
+  this week: neat tls, alt-svc, immutable bug, some non-necko stuff. more reviews.
+
+Daniel
+ - NEAT project work
+ - Bug 1395914 - IPv6 network identification (Linux version reviewed OK, mac version coming)
+
+Valentin
+Tried to land Honza's patch
+Bug 910207 - Speculative connections should prevent Client Certificate Selection dialog
+*created a regression so we backed it out
+Bug 1396307 - Crash in RtlEnterCriticalSection | mozilla::RecursiveMutexAutoLock::RecursiveMutexAutoLock
+*crash with auth caused by faulty rcwn logic? on beta
+Bug 1399541 - Add assertion that we rcwn is enabled when mRaceCacheWithNetwork == true
+*triggered some crashes - which means we have a logic bug
+
+Dragana
+TFO
+rel=preload and no-cache 
+JAR
+gmail issue - Bug 1389772 (reports in bug 1380896 gmail is slow or stops responding)
+Bug 1391543 - Network stops occasionally during "Performing a TLS handshake to..."
+
+Gary
+Bug 1373708 - Convert Jar channels to stop using main thread I/O
+- fixing tests, some patches are submitted.
+
+Junior
+Bug 870460 - Lazy load of cookie service blocks main thread while cookie database loads
+ - r?
+intend to implement: remove legacy upgrade: cookie.txt, DELETE null base basedomain
+
+Amy
+Bug 1376009 - Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::net::PCookieServiceChild::SendGetCookieString
+*uplift to beta
+Bug 1360603 - Mark Save as... channels used for download as throttleable
+*f+
+*Have to ask dom peer to review this patch
+Bug 1386746 - HTTP response throttling: experiment with limiting the amount of data we read during the short don't-block-read period
+*Started to work on this bug.
+
+Kershaw
+Bug 1377208 - Move background transactions over h2 to the background group
+ - landed
+
+Bug 1395472 - Kill switch for moving background transactions over h2 to the background group
+ - landed
+
+Bug 1247843 - All <link rel="icon">s are downloaded during the critical path
+ - WIP
+ - Fix test failures
+
+SC
+[PBg-Http]
+ - performance analysis
+  - First Paint time for visible elements in HTML document is improved because HTML parser will start to create DOM element earlier.
+    The difference can be observed from TALOS tp6 amazon/youtube. The average first paint time is improved around 50ms.
+  - However for facebook no improvement is observed because there is no visible element in the HTML document.
+    In the HTML document there is only for loading CSS/JS scripts and executing <script> element. All the visible DOM elements are added after running a bunch of JS code.
+    In this case, the bottle neck of rendering is still on main thread. PBg-Http is only changing order of some tasks but cannot gain any performance improvement.
+  - I tried to dispatch StopRequestEvent runnables into high priority queue. The TALOS result shows changes dramatically.
+    Performance test is either improved a lot or regress a lot. All the tp6 test cases are seeing huge improves (around 80~100ms for amazon/youtube/facebook, 30ms for google).
+    However, the tpaint, tp5o_scroll, and several tp5o metrics are regressed a lot.
+    My impression is this patch changes the event sequence too much, so that the performance landscape is changed too much.
+    TALOS result: https://treeherder.mozilla.org/perf.html#/compare?originalProject=try&originalRevision=fd6dceb87671ff98461f935a0be00678f017264b&newProject=try&newRevision=e5cfac6814cfe32fa7ad6a8bf084bb874d4d7fd7&framework=1&showOnlyImportant=0&showOnlyConfident=1
+  - I did scrolling smoothness test on facebook timeline page with Taipei Hasal team.
+    No obvious performance change after PBg-Http is enabled because the jank is caused by JS code in web page and rendering.
+    This is because facebook uses React framework, which is using javascript to manage components and virtual DOM tree.
+  - QA in taipei also help record a comparison video of scrolling smoothness on instagram.
+    With PBg-Http enabled the scrolling speed and smoothness is improved [comparison video https://youtu.be/rlWsig8YA58].
+    Looked into the corresponding gecko profile, instagram is use less heavy JS to do the incremental loading. Thus, the benefit of OMT is easier to be observed.
+ - trying to get CC/GC log from treeherder for investigating bug 1353829
+  - major difference is because different set of decoded image is hold by Gecko. This is highly related to the change of loading sequence.

@@ -1,0 +1,62 @@
+2016-03-24
+
+NECKO WEEKLY MEETING NOTES
+
+Thurs March 24, 2016
+
+STICKY
+- Triaging new bugs: http://tinyurl.com/z26p7g3
+- NECKO-ACTIVE bugs: http://tinyurl.com/j8pj35u
+- NECKO-BACKLOG bugs:  http://tinyurl.com/hpkcxx3
+
+Round Table:
+ - nick - thanks for the triage. Next is Honza.
+ - jemalloc mismatch https://bugzilla.mozilla.org/show_bug.cgi?id=1249849 anyone want to think about this for necko?
+
+Nick [read-only march 24]
+*Bug triage
+*1016628 - predictor prefetch - doing last (I hope) try run (woo!)
+*1170928 - crash when doing CONNECT over h2 proxy - still investigating (finally got rr working - digging into assertions hitting before the crash)
+*1122642 - INADEQUATE_SECURITY neterror - investigating some weird test failures
+
+Honza
+backtrack
+condition var resilient to spurious wake-up and too early notification
+
+
+Michal
+ - [landed] 1257611 - Fix wrong CondVar::Wait() and Monitor::Wait() usage in netwerk/cache2
+ - [test] 1227136 crash in mozilla::net::WebSocketChannel::StartWebsocketData
+ - 1253883 AddressSanitizer: heap-use-after-free in cache2 code
+ - 1071674 [e10s] crash in mozilla::net::ReadEvent::Run()
+
+Patrick
+ - last week
+    pollable event 698882: talos bug, LSP that assumes a NSPR layer, NSPR fix to GetLayerIdentity, TCPSocket GC fixes, Presentation Server (in progress), XP (in progress)
+    0 len CORS h2 option change
+    working on connect issues with dragana
+    
+- this week
+  connect issues
+  pollable event
+  is MAX fd an issue.. (needs bug)
+  autodial pref
+  brotli off in esr45
+
+Daniel
+ - network change detection on windows now ipv4 only
+  - working on a build with more PAC/proxy logging to aid debugging
+
+Valentin
+1231565 - cache JS bytecode
+[landed] 1254061 - Segmentation fault. ParseInt64 nsHttpResponseHead
+
+Dragana
+Bug 1256336 -       Crash in mozilla::net::InterceptStreamListener::Cleanup
+Bug 1257809 -       Improve telemetry for PR_Connect
+Bug 409885 -       SetDomain shouldn't do string manipulation of URIs
+Bug 1259089 -       Set a socket nonblocking in sts, just to be sure
+Bug 1257216 -       Increase toolkit.asyncshutdown.crash_timeout for winXP
+Bug 754280 -       crash in nsSocketTransport::InitiateSocket (mainly with Yandex Bar)
+close or moved some bugs from necko-backlog: 281037, 682294, 410293, 65853, 643848
+

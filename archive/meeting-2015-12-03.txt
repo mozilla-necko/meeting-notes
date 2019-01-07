@@ -1,0 +1,38 @@
+2015-12-03
+
+NECKO WEEKLY MEETING NOTES
+
+Thurs Dec 3rd, 2015
+
+Round Table:
+- cloudflare turned on h2!
+
+Nick
+*error page for INADEQUATE_SECURITY in progress
+*infinite loop in certain h2 header cases landed
+*h2 push hang w/large pushes in progress
+*predictor prefetch - almost ready for review (last try run - I hope)
+*node-http2
+
+Honza
+
+Michal
+ - 922481 e10s: remote the file:// protocol
+
+Patrick
+
+Daniel
+*Bug 1207798 proxy fallback pref landed
+*Bug 1145235  Network Error Logging - 
+
+
+Valentin
+1183781 - Small leak in DNS.cpp and nsHostResolver.cpp [backout]
+1225111 - Ajax Request loaded from cache when charset not in first kb
+1229817 - Second CacheFileMetadata constructor did not set pin flag
+review replace nsBaseHashtable::Enumerate with iterators
+found bug in defered storage which blocks app pinning
+
+Dragana
+sdt - continuation
+

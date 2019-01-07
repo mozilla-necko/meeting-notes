@@ -1,0 +1,58 @@
+
+November 28 2018
+
+Round Table
+
+* CORS header issue: [https://bugzilla.mozilla.org/show_bug.cgi?id=1345788](https://bugzilla.mozilla.org/show_bug.cgi?id=1345788)
+
+* [https://bugzilla.mozilla.org/show_bug.cgi?id=1113676](https://bugzilla.mozilla.org/show_bug.cgi?id=1113676) 
+
+Honza 
+
+Michal
+
+* 1508740 Crash in OOM | large | NS_ABORT_OOM | nsTSubstring<T>::SetLength
+
+* 1506532 Collect telemetry about resource sharing between origins
+
+Junior    
+
+Valentin [offline]
+
+Bug 1493630 - Crash in std::panicking::rust_panic_with_hook RustURL
+
+Bug 1507357 - DOM URL object doesn't allow setting pathname when underlying implementation is SimpleURI
+
+Bug 1502097 - Figure out a better way of defining the network.IDN.blacklist_chars pref
+
+Bug 1349316 - Include dotted forms from Latin Extended Additional unicode block for IDNA
+
+Bug 1502025 - Use captive portal service to perform connectivity checks
+
+Bug 1260527 - Change HttpChannelChild to open IPDL as part of construction (i.e. earlier than AsyncOpen)
+
+Bug 1507157 - application crashed GetValidatedOriginAttributes - SerializedLoadContext is null
+
+Dragana
+
+* necko and mobile
+
+* what is pocket doing? 
+
+Kershaw
+
+* [ Bug 1478280 samesite=strict prevents reading the cookie after a xhr request](https://bugzilla.mozilla.org/show_bug.cgi?id=1478280)
+
+    * Find root cause and change component to DOM:security
+
+* [Bug 1486033](https://bugzilla.mozilla.org/show_bug.cgi?id=1486033) - Add plumbing for Telemetry for new network process
+
+    * Landed
+
+* [Bug 1407384 Make notifications respect channel.suspend](https://bugzilla.mozilla.org/show_bug.cgi?id=1407384)
+
+    * P1 and P2 r+
+
+    * P3 r?
+
+Junior 

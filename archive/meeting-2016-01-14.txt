@@ -1,0 +1,47 @@
+2016-01-14
+
+NECKO WEEKLY MEETING NOTES
+
+Thurs Jan 14, 2016
+
+Round Table:
+
+Nick
+*error page for INADEQUATE_SECURITY in progress - waiting on strings from UX
+*predictor prefetch - working on comments today, next r? soon
+*crash when doing CONNECT over h2 proxy - investigating (lots more issues i'm hitting)
+*node-http2 - bug triage, DoS bugs fixed
+*memory reporter for http channels
+
+Honza
+
+Michal
+ - 1226941 - crash in mozilla::net::CacheFileIOManager::Write
+
+Patrick
+cache changes for 4xx
+Bug Triage
+Roxana
+
+Daniel
+*1158189 - proxy problem top crash on Windows
+*1159889 - HTTP/2 and IP address change
+*1235509 - IPv6 and network changes on Linux (Dragana works on it really)
+*
+
+
+Valentin
+presto - visualization prototype - http://goșu.ro/presto/plot/plot.html
+1239686 - logging in about:networking
+1042347 - %2e in the URL path
+1238507 - cleanup necko binaries and convert to cppunittest/gtest
+*
+
+Dragana
+Bug 1238910 - Rethink/rework neckoxpcom-shutdown/profile-change-net-teardown
+Bug 1239655 - Do not do PR_ConnectContinue during shutdown
+Bug 1234548 - firefox 43 ipv6 request timeout in long requests and similar
+Bug 1226663 - Certains pages firefox won't full load and keep infinitely loading (spinning)
+Bug 580313 - prefetch links not followed in mutated HTML - almost done
+NEAT doc
+WebPush review

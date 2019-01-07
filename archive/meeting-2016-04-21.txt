@@ -1,0 +1,69 @@
+2016-04-21
+
+NECKO WEEKLY MEETING NOTES
+
+Thurs April 21, 2016
+
+STICKY
+- Triaging new bugs: http://tinyurl.com/z26p7g3
+- NECKO-ACTIVE bugs: http://tinyurl.com/j8pj35u
+- NECKO-BACKLOG bugs:  http://tinyurl.com/hpkcxx3
+
+Round Table:
+ - jemalloc mismatch https://bugzilla.mozilla.org/show_bug.cgi?id=1249849 anyone want to think about this for necko?
+ - PR_Connect / IO function blocking - raise this with MS or move here somehow forward, this is getting urgent
+ - propose a shared memory (single process) model for saving memory copying
+ - https://www.yammer.com/mozilla.com/#/threads/show?threadId=690464845 - people getting NS_ERROR_NET_RESET quite often
+- shutdown hang in CacheFileMetadata::~CacheFileMetadata on nightly http://tinyurl.com/h7jsetb
+
+Nick [read-only april 21]
+*1016628 - predictor prefetch - r+'d (thanks Honza!) last try run
+*1122642 - INADEQUATE_SECURITY neterror - final try run
+*1236650 - push cache not found with redirects - landed
+*yet another cookie security bug (likely mostly, if not entirely, invalid)
+*h2 proxy stuff - still digging in, very non-deterministic/unpredictable
+
+Honza
+backtrack
+
+
+Michal
+  1253883 - AddressSanitizer: heap-use-after-free in cache2 code
+  1254254 - Intermittent crash PROCESS-CRASH
+  1071674 - [e10s] crash in mozilla::net::ReadEvent::Run()
+  1258747 - Have a programmatic limit for CacheFileInputStream reading
+
+Patrick
+ - last week
+   pto
+  neat
+   pollable event backport
+   865314 close issue
+   tail crashes: 1261318, 866380
+ legacy raw ptrs in http
+    
+- this week
+  neat
+ sdt
+  
+
+Daniel
+ - network change detection on windows now ipv4 only
+  - working on a build with more PAC/proxy logging to aid debugging
+
+Valentin
+548685 - null pointer deref nsURIHashKey
+1263722 - performance navigation timing
+1231565 - write mock tests for alt-data
+1262326 - fix user agent override on e10s
+
+
+Dragana
+Bug 1256336 -       Crash in mozilla::net::InterceptStreamListener::Cleanup
+Bug 1257809 -       Improve telemetry for PR_Connect
+Bug 409885 -       SetDomain shouldn't do string manipulation of URIs
+Bug 1259089 -       Set a socket nonblocking in sts, just to be sure
+Bug 1257216 -       Increase toolkit.asyncshutdown.crash_timeout for winXP
+Bug 754280 -       crash in nsSocketTransport::InitiateSocket (mainly with Yandex Bar)
+close or moved some bugs from necko-backlog: 281037, 682294, 410293, 65853, 643848
+

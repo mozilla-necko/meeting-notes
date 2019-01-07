@@ -1,0 +1,80 @@
+
+
+Thurs Sept 27, 2018
+
+Triage: Michal
+
+Round Table:
+
+* Who’s coming to All-hands?
+
+* Need owner: 1418134 Navigation Cancels XHR Requests and Calls Onerror
+
+* Security bug access and triage
+
+* Update URL to "meeting notes" (to this document) in the triage web-app!
+
+* Per-domain HTTP caching?
+
+* Stop revalidating?  How did it go for Chrome?  (bug 1267474)
+
+* [https://stackoverflow.com/questions/34761700/does-chrome-violate-the-standards-in-caching](https://stackoverflow.com/questions/34761700/does-chrome-violate-the-standards-in-caching)
+
+Nick
+
+* Sec bug in h2 decompressor (patch waiting review)
+
+* 1440462 - stop sending httponly cookie values to child processes (landed)
+
+* 1492484 - tab switching can cause illegal h2 PRIORITY frame (fixed, in beta, requested esr)
+
+* 1493204 - fuller fix for 1492484 (put pushes in the priority tree appropriately) in progress
+
+* 1409570 - hang in (racy) corner case with h2 pushes
+
+* H2ws - big breakthrough - data flows all the way through, just a little disconnect between ws close and h2 stream close, after that should be ready for review
+
+Honza
+
+Michal
+
+Daniel
+
+* quic libraries
+
+* Octal IP numbers
+
+* Grace period to cached TTLable DNS entries
+
+* HSTS firefox.com ? captive portal...
+
+Valentin
+
+Dragana
+
+ESNI
+
+Some sec bug, Honza took
+
+DoH,
+
+Quic meeting, mozquic
+
+Junior
+
+* nsAHttpTransactionShell ← nsHttpTransaction
+                                         ← HttpTransactionParent
+
+* Back pressure telemetry: we’re going to see if localhost tests matters in the telemetry
+
+Kershaw
+
+* Bug 1494585 Create IPC between HttpChannelChild and SocketProcess
+
+    * Create an empty top level IPC protocol
+
+* Bug 1490235 Crash in OOM | large | NS_ABORT_OOM | mozilla::net::AltDataOutputStreamChild::Write
+
+    * Fixed
+
+* * *

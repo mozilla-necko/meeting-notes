@@ -1,0 +1,73 @@
+
+
+Thurs Oct 4, 2018
+
+Triage: Daniel
+
+Round Table:
+
+* Stop revalidating?  How did it go for Chrome?  (bug 1267474)
+
+Nick
+
+* 1493204 - h2 pushes in priority tree - landed
+
+* 1409570 - racy hang with h2 push - landed, will request uplift to beta today
+
+* 1496224 - follow-on to 1409570 (clang-tidy complaint) - landed
+
+* 1050329 - telemetry & better behaviour (re-dispatch as h1) with really busted h2 servers
+
+* h2ws - re-breakthrough - connection sharing not quite right
+
+Honza
+
+* Researching sandboxing, etc for necko socket process
+
+    * Parent not going to get locked down
+
+* Luke Wagner shared JS libs project
+
+Michal
+
+* 1484149 Cache racing breaks NTLM authentication - Load / NTLM Auth / cache issue in Firefox and Sharepoint on premises
+
+* 1493278 ChildDNSService::GetDNSRecordHashKey is doing unnecessary work
+
+* 1495336 High limit of NETWORK_CACHE_METADATA_SIZE and NETWORK_CACHE_METADATA_FIRST_READ_SIZE probes is too low
+
+* 1495337 Increase size of the first read when reading metadata
+
+Daniel
+
+Valentin
+
+* Bug 1489229 - Crash in mozilla::net::nsPACMan::ConfigureWPAD
+
+* Bug 1460537 - Unified connectivity checker
+
+* Bug 1495867 - Make sure we support view-source for cross-process-redirecting channels 
+
+Dragana
+
+* Quic
+
+Junior
+
+*  Bug 1485355 Add methods on nsHttpConnectionMgr to accept PHttpTransactionParent
+
+*  Bug 1496257 Enable xpcshell-test for socket process isolation - SyncLaunch version
+
+Kershaw
+
+* Try to stop polling socket on parent process
+
+    * Only thing broken is nsIServerSocket
+
+* Try to make mochitest work with socket process
+
+    * Bug 1496464 - Handle the result of OnStartRequest correctly in HttpTransactionParent::RecvOnStartRequest
+
+    * HTTPS is not working
+
+* * *

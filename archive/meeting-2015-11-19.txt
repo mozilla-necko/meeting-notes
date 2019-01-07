@@ -1,0 +1,40 @@
+2015-11-19
+
+NECKO WEEKLY MEETING NOTES
+
+Thurs Nov 19th, 2015
+
+Round Table:
+    - No meeting next week (11/26): holiday in US
+
+Nick
+*prefetch in predictor - one test left to fix (httpd refusing connections on try, not locally - high-latency debugging!)
+*error page for INADEQUATE_SECURITY
+*infinite loop in certain h2 header cases
+
+Honza
+
+Michal
+ - reviews
+ - 1190951 - TSan: data race netwerk/cache2/CacheIndex.cpp:1397
+ - 1222782 - TSan: data race netwerk/cache2/CacheIOThread.cpp:148
+ - 1206392 - Firefox can't load websites but other browsers can - trash dirs in cache2 dir
+ - 922481 e10s: remote the file:// protocol
+
+Patrick
+
+Daniel
+*Bug 1207798 proxy fallback pref landed
+*Bug 1145235  Network Error Logging - 
+
+
+Valentin
+[landed] 412457  - should unescape hostname first, then perform IDNA
+[landed] 1142083 - IDN Unicode domain redirect is broken in Firefox
+[landed] 1218918 - devtools "work offline" does not work after up/down
+1183781 - Small leak in DNS.cpp and nsHostResolver.cpp
+1225255 - nsStandardURL should use nsNCRFallbackEncoderWrapper instead of raw nsIUnicodeEncoder
+
+Dragana
+sdt - continuation
+

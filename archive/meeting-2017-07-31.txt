@@ -1,0 +1,129 @@
+2017-07-31
+
+NECKO WEEKLY MEETING NOTES
+
+Thurs July 20th, 2017
+STICKY
+- Triage duty: SC
+-  new untriaged bugs: https://tinyurl.com/zhk9yjf
+- NECKO-ACTIVE bugs: https://tinyurl.com/j8pj35u
+- NECKO NEXT bugs: https://tinyurl.com/zjwjfee
+- NECKO-BACKLOG bugs:  https://tinyurl.com/hpkcxx3
+
+Round Table:
+- Proposal: once at month (whichever triage cycle includes the 1st of the month), we have two triagers: one regular, and one person goes over the necko-backlog|next|active lists
+   - look at active just to make sure they're all assigned
+- strange rendering problems?
+
+
+---PROJECT UPDATES---
+    - rust-url meeting notes: https://public.etherpad-mozilla.org/p/mozloha-rust-url
+    - rcwn https://public.etherpad-mozilla.org/p/mozaloha-rcwn
+
+Nick
+- NTLM Hell
+
+Honza
+
+Michal
+ - 1382831 Race condition in nsHttpChannel::OnCacheEntryCheck when racing cache with network
+ - 1369051 Assertion failure: !entry || !entry->IsFresh()
+ - 1378327 Crash in mozilla::net::CacheFileChunk::Truncate
+ - 1382688 Do not allow to enable old disk cache backend
+
+Patrick
+  last week: mpendingq, 256fd telemetry, 0.9 telemetry, namespaces, neat tls, alt-svc, immutable bug, some non-necko stuff
+  this week: neat tls, alt-svc, immutable bug, some non-necko stuff. more reviews.
+
+Daniel
+  - 3 days QUIC interim in Paris last week (attended from remote)
+  - "HTTP Workshop" in London
+  - queued up some reviews to deal with
+  - 1360164 - The first async XHR done during startup blocks the main thread while initializing nsProtocolProxyService
+  - 1364250 - Move JAR channel I/O off of main thread
+  - 1366222  - Basic authentication 401 message flood
+
+
+Valentin
+1378115 - make about:networking remember the current section [landed]
+1376503 - add hard limit for cache slowness [landed]
+945240 - change nsStandardURL internal representation to punycode [landed]
+1380617 - make nsStandardURL return punycode by default. Fix UI [partially done]
+1350533 - crash when uploading large files to cloud.mail.ru [investigating]
+1381816 - RCWN pref study #2 [next week]
+
+
+RCWN - telemetry should be available in the next few days, so we can see if it made any improvement
+Looked into 1367810 - Crash in mozilla::net::nsHttpChannel::CallOnStartRequest
+
+Dragana
+TFO
+IETF
+QUIC
+NEAT
+
+Gary
+CDP Testing
+- Tracking Protection
+  - fixed a WPT's bug
+- Background download
+  - permission denied when it tries to save file
+- Multiple tabs
+  - on going
+
+Junior
+Bug 1373198 - Disable RCWN for tests which require deterministic cache behavior
+ - Part 1 - Part 13: r+
+Follow-ups
+no mListener in nsHttpChannel::OnStartRequest (comment 87, 90, 91)
+webRequest failure (comment 88 and Bug 1384803)
+Bug 1384493 - dom/base/test/test_link_stylesheet.html fails when we enable rcwn
+Bug 1384478 - "Save Video As" not working when we enable rcwn
+Bug 1384506 - dom/base/test/test_urgent_start.html fails when we enable rcwn
+Bug 1384510 - toolkit/mozapps/extensions/test/xpcshell/test_backgroundupdate.js fails when we enable rcwn
+
+Prepare slides in mozilla developer conference in Taipei "HTTP2 is coming QUICkly"
+
+Amy
+Bug 1331680 - Consider not doing sync IPC for document.cookie getter/setter
+*implementations - r+
+*test cases- r+
+*try server - pass
+Cookie bugs
+*Started to clarify and reproduce some cookie bugs
+*Bug 1366578 - cookies are not transmitted when handling custom protocol
+*Bug 1364466 - Cookie lost with custom container
+*Bug 1338309 - Gmail complains that cookies are disabled in e10s windows
+
+Kershaw
+[CDP]
+Bug 1366822 - The active tab notification doesn't work when switching among windows
+ - r+
+ 
+ Bug 1382274
+
+CDP Test
+ - Identify hero element and trackers
+ - Writing scripts to analyze data
+ - https://goo.gl/yZoZpX
+
+SC
+[PBg-Http]
+ - telemetry analysis
+  - HTML5 parser, image decoder, fetch is fully OMT now
+  - JS/CSS/font/XHR are the next thing to OMT
+ - performance analysis
+   - after M3 landed, 500px/ebay shows 8%~10% improvement on speedIndex
+   - manually revert PBg-Http works (disable retargeting in HttpChannelChild/using main thread IPC)
+    - talos shows performance regression after PBg-Http is enabled
+     - quantum_pageload shows major regression on amazon/google/youtube when PBg is on, especially amazon (40%)
+      - gecko profile captured and doing analysis with Taipei performance team now.
+      - planning about implementing a kill switch in case we need to disable it on 57.
+     - sessionrestore_many_windows also shows 5-8% regression
+h
+     - responsiveness/animation/scroll tests show minor improvement (around 1-2%)
+ - fix regressions
+   - Bug 1382380, Bug 1369571, Bug 1384294, Bug 1382380
+[CDP]
+ - Bug 1382567 - boost load priority of preloaded image for <img> without height/width attribute
+  - provide WIP for previous the impact of this algorithm

@@ -1,0 +1,126 @@
+2017-03-02
+
+NECKO WEEKLY MEETING NOTES
+
+Thurs Feb 22, 2017
+STICKY
+- Triage duty: dragana
+-  new untriaged bugs: https://tinyurl.com/zhk9yjf
+- NECKO-ACTIVE bugs: https://tinyurl.com/j8pj35u
+- NECKO NEXT bugs: https://tinyurl.com/zjwjfee
+- NECKO-BACKLOG bugs:  https://tinyurl.com/hpkcxx3
+
+Round Table:
+- BOOK YOUR HOTEL ROOMS ("Home Hotel" in Taipei is best)
+- Next week after Taipei time meeting: CDN project meeting
+- bug 1342425 Crash in mozilla::net::AppendRequestsToArray
+
+
+---PROJECT UPDATES---
+    - rust-url meeting notes: https://public.etherpad-mozilla.org/p/mozloha-rust-url
+    - rcwn https://public.etherpad-mozilla.org/p/mozaloha-rcwn
+    - service workers https://public.etherpad-mozilla.org/p/mozaloha-sw-necko
+
+QUIC  (Pat, Dragana, Daniel)
+
+
+Race-Cache-with-Network (Michal, Valentin, Junior)
+- Landed telemetry for time load difference
+- Next: racing logic + improvement telemetry
+
+Context-Driven Priority  (Honza, Kershaw, Amy, Gary, Nick)
+- maybe we should give this a read? http://web.mit.edu/ravinet/www/polaris_nsdi16.pdf
+
+PBackgroundHttp (SC, NIck)
+
+
+Nick
+- channel throttling landed
+- h2 early-data close (i hope!)
+- h2 ORIGIN
+- PTO next week
+
+Honza
+
+Michal
+ - triage
+ - 1342722 Firefox cache used all available inodes on the system
+ - 1342366 Crash in nsWyciwygChannel::GetCharsetAndSource
+ - 1342360 Crash in mozilla::net::WyciwygChannelParent::ActorDestroy
+ - 1342899 websocket failed connections are stacked up?
+ - 1343916 CacheFile::Truncate doesn't update hashes in CacheFileMetadata
+
+Patrick
+  last week: mpendingq, 256fd telemetry, 0.9 telemetry, namespaces, neat tls, alt-svc, immutable bug, some non-necko stuff
+  this week: neat tls, alt-svc, immutable bug, some non-necko stuff. more reviews.
+
+Daniel
+   NEAT
+
+Valentin
+Bug 945240 - Consider making Location.href punycode non-ASCII hostnames
+Bug 1324243 - IPV4 urls in IPV6 format should serialize to IPV6 urls - using rust-url
+Bug 1341343 - Unable to load from alternate data after re-saving it.
+RCWN frontend (prefs + logic + bugs)
+several resource-timing + web-patform-test bugs
+
+Dragana
+NEAT
+SDT
+Bug 1343600 - Add TLS handshake Start/Stop events
+Bug 1343008 - Fix -> h2, tls1.3 early-data and POST conbination
+Bug 1340164 -       Fix socket transport status events
+Bug 1341572 -       Fix multiple HalfOpen socket for a single transaction
+Bug 1261585 - nsiTraceableChannel listener not working as expected with e10s enabled
+
+Gary
+- Bug 1321841 - Firefox network loss after connection to Cisco VPN.
+- Unified Presto
+  - Provide this service to Mozillians
+  - Cowork with Hasal team
+
+Junior
+Bug 1338154 - Regression: Resource URLs whose first path ("host") component consists entirely of numbers no longer work
+- r+ uplift to beta and esr 52
+Bug 1325091 - Add flag indicating presence of alternative data in the cache entry to cache index
+- WIP
+
+Amy
+Bug 1325909 - Add a new bucket and modify the bucket name on telemetry COOKIE_LEAVE_SECURE_ALONE.
+*Landed.
+Bug 1293067 - (feature request): Implement a cookie limit warning 
+*r+
+Bug 1312774 - Allow channels marked as "urgentStart" to bypass connection limits
+*Already fixed the try server error(the test_http2.js error on android platform by the wrong on the modification of xpcshell.ini).
+Bug 1319403 - deleting session cookies
+*r+
+Bug 1331680  Consider not doing sync IPC for document.cookie getter/setter
+*Have studied the steps from Ehsan’s suggestions and discussed to SC.
+
+
+Kershaw
+Bug 1312782 -       Implement "B" and "C" slots in the HTTP transaction dequeue logic
+ - V1 got f+
+ - V2 r?
+
+Bug 469228 -  Support keep-alive connections in httpd.js
+- Patch rebased
+- Identify failed tests when keep-alive is enabled
+
+Bug 1339676 -       Labeling runnables in netwerk/
+- Investigate how many bugs should be filed
+
+SC
+[HttpChannel]
+- PBackground-ify HttpChannel IPC
+ - Bug 1320744 - HttpChannelChild should implement nsIThreadRetargetableRequest
+  - update patch according to review comment
+  - fixing HTTP channel cancel atomic issue
+ - Bug 1015466 - PBackground-ify Necko transport to off-main-thread consumers (e10s breaks retargetable delivery)
+  - preparing WIP, fixing background channel lifecycle issue
+  - next steps: 1) lifecycle handling while redirecting, 2) OnStart/ODA/OnStop handling, 3) channel diversion handling, 4) service worker interception handling
+- CDP
+ - Bug 1312770 - Set image load priorities according to their position in viewport
+  - fix channel priority related issue in Bug 1338096 and Bug 1337721
+  - running WebPageTest and waiting for the performance result
+  - most image-heavy websites have height/width specified, channel priority over visibility seems more useful in reality.

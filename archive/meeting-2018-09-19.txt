@@ -1,0 +1,50 @@
+
+
+Thurs Sept 19, 2018
+
+Triage: Honza (forgot to get to it last week, so staying on this week)
+
+Round Table:
+
+* Who’s coming to All-hands?
+
+* Rcwn and writting a new content
+
+Nick
+
+Honza
+
+Michal
+
+* 1428901 Persist TLS session tickets across browsing sessions
+
+Daniel
+
+Valentin
+
+Dragana
+
+Junior
+
+* nsHttpTransaction splitting
+
+    * [P1 create HttpTransactionParent/Child to pretend IPC](https://bugzilla.mozilla.org/attachment.cgi?id=9005781)
+
+    * [P2 disable passing objects which is used by both processes](https://bugzilla.mozilla.org/attachment.cgi?id=9009806)
+
+    * WIP - able to load nsHttpTransaction in one or two processes
+
+* Back Pressure
+
+    * 3% of the suspension candidate in beta (4-5% in nightly)
+
+Kershaw
+
+* Socket process
+
+    * Implement PHttpTransaction.ipdl
+
+    * I can load a simple web page now.
+
+* * *
+

@@ -1,0 +1,114 @@
+2017-09-07
+
+NECKO WEEKLY MEETING NOTES
+
+Thurs Sept 7th, 2017
+STICKY
+- Triage duty: nwgh
+-  new untriaged bugs: https://tinyurl.com/zhk9yjf
+- NECKO-ACTIVE bugs: https://tinyurl.com/j8pj35u
+- NECKO NEXT bugs: https://tinyurl.com/zjwjfee
+- NECKO-BACKLOG bugs:  https://tinyurl.com/hpkcxx3
+- Triage Notes
+    - Android crashes on infra are currently not symbolicated: https://bugzilla.mozilla.org/show_bug.cgi?id=1389805 (makes triaging/diagnosing android crash bugs hard/impossible)
+
+Round Table:
+*57 Nightly, Beta milestones   https://docs.google.com/document/d/1jeypuqBqEyIh-4qxXT0UnE2aVjetN7uVD8W7L7TbWKg/edit
+*Bug 1397635 needs review and blocks a qf1. would be really nice to have it for 57. Thanks!
+*Bug 910207 - Speculative connections should prevent Client Certificate Selection dialog
+*Can someone help to land this bug? A mandatory photon feature(bug 1348275) depends on this to be in Firefox 57, and better to uplift to 56 as well.
+*Bug 1393540 rel=preload and our speculative load queue
+
+
+*(15:48:00) annevk: if y'all have meetings, could you bring up fixing https://bugzilla.mozilla.org/show_bug.cgi?id=1363284 as part of some Quantum effort
+*(15:48:28) annevk: we even have Google devrel volunteering to draw up graphics how it makes Firefox faster than Chrome
+*(15:49:05) annevk: https://twitter.com/annevk/status/901493567855710208
+
+----------------
+
+Nick
+
+Honza
+
+Michal
+b   - 1395121 NS_NOTREACHED("mListener is null") in nsHttpChannel::OnStartRequest
+  - 1384478 browser/base/content/test/general/browser_save_video.js fails when we enable rcwn
+  - 1395403 Receiving large binary websocket messages consumes too much CPU
+  - 1394564 Version 55 breaks sending large amounts of data over web sockets.
+  - 1392841 Enable RCWN on Nightly
+
+Patrick
+  last week: mpendingq, 256fd telemetry, 0.9 telemetry, namespaces, neat tls, alt-svc, immutable bug, some non-necko stuff
+  this week: neat tls, alt-svc, immutable bug, some non-necko stuff. more reviews.
+
+Daniel
+ - NEAT project work
+ - Bug 1395914 - IPv6 network identification (Linux version reviewed OK, mac version coming)
+
+Valentin
+Bug 1369317 - Optimized data URI parsing by ~20% [landed]
+Bug 1306646 - Match updated Timing-Allow-Origin definition. [landed]
+Bug 919391 - Incorrect Navigation Timing API: performance.timing.responseStart - performance.timing.requestStart <0 [landed]
+Bug 1392260 - resource-timing - Fix error in gzip_xml.py [landed]
+
+working on:
+threadsafe URIs
+other resource-timing bugs
+
+Dragana
+TFO
+rel=preload and no-cache 
+JAR
+gmail issue - Bug 1389772 (reports in bug 1380896 gmail is slow or stops responding)
+Bug 1391543 - Network stops occasionally during "Performing a TLS handshake to..."
+
+Gary
+Bug 1373708 - Convert Jar channels to stop using main thread I/O
+- fixing tests, some patches are submitted.
+
+Junior
+Bug 870460 - Lazy load of cookie service blocks main thread while cookie database loads
+ - r?
+intend to implement: remove legacy upgrade: cookie.txt, DELETE null base basedomain
+
+Amy
+Bug 1376009 - Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::net::PCookieServiceChild::SendGetCookieString
+*uplift to beta
+Bug 1360603 - Mark Save as... channels used for download as throttleable
+*f+
+*Have to ask dom peer to review this patch
+Bug 1386746 - HTTP response throttling: experiment with limiting the amount of data we read during the short don't-block-read period
+*Started to work on this bug.
+
+Kershaw
+Bug 1377208 - Move background transactions over h2 to the background group
+ - landed
+
+Bug 1395472 - Kill switch for moving background transactions over h2 to the background group
+ - landed
+
+Bug 1247843 - All <link rel="icon">s are downloaded during the critical path
+ - WIP
+ - Fix test failures
+
+SC
+[PBg-Http]
+ - performance analysis
+  - First Paint time for visible elements in HTML document is improved because HTML parser will start to create DOM element earlier.
+    The difference can be observed from TALOS tp6 amazon/youtube. The average first paint time is improved around 50ms.
+  - However for facebook no improvement is observed because there is no visible element in the HTML document.
+    In the HTML document there is only for loading CSS/JS scripts and executing <script> element. All the visible DOM elements are added after running a bunch of JS code.
+    In this case, the bottle neck of rendering is still on main thread. PBg-Http is only changing order of some tasks but cannot gain any performance improvement.
+  - I tried to dispatch StopRequestEvent runnables into high priority queue. The TALOS result shows changes dramatically.
+    Performance test is either improved a lot or regress a lot. All the tp6 test cases are seeing huge improves (around 80~100ms for amazon/youtube/facebook, 30ms for google).
+    However, the tpaint, tp5o_scroll, and several tp5o metrics are regressed a lot.
+    My impression is this patch changes the event sequence too much, so that the performance landscape is changed too much.
+    TALOS result: https://treeherder.mozilla.org/perf.html#/compare?originalProject=try&originalRevision=fd6dceb87671ff98461f935a0be00678f017264b&newProject=try&newRevision=e5cfac6814cfe32fa7ad6a8bf084bb874d4d7fd7&framework=1&showOnlyImportant=0&showOnlyConfident=1
+  - I did scrolling smoothness test on facebook timeline page with Taipei Hasal team.
+    No obvious performance change after PBg-Http is enabled because the jank is caused by JS code in web page and rendering.
+    This is because facebook uses React framework, which is using javascript to manage components and virtual DOM tree.
+  - QA in taipei also help record a comparison video of scrolling smoothness on instagram.
+    With PBg-Http enabled the scrolling speed and smoothness is improved [comparison video https://youtu.be/rlWsig8YA58].
+    Looked into the corresponding gecko profile, instagram is use less heavy JS to do the incremental loading. Thus, the benefit of OMT is easier to be observed.
+ - trying to get CC/GC log from treeherder for investigating bug 1353829
+  - major difference is because different set of decoded image is hold by Gecko. This is highly related to the change of loading sequence.

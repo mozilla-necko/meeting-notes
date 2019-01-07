@@ -1,0 +1,120 @@
+2017-04-06
+
+NECKO WEEKLY MEETING NOTES
+
+Thurs April 6 2017
+STICKY
+- Triage duty: dragana
+-  new untriaged bugs: https://tinyurl.com/zhk9yjf
+- NECKO-ACTIVE bugs: https://tinyurl.com/j8pj35u
+- NECKO NEXT bugs: https://tinyurl.com/zjwjfee
+- NECKO-BACKLOG bugs:  https://tinyurl.com/hpkcxx3
+
+Round Table:
+    - Yet another management re-org!
+
+
+---PROJECT UPDATES---
+    - rust-url meeting notes: https://public.etherpad-mozilla.org/p/mozloha-rust-url
+    - rcwn https://public.etherpad-mozilla.org/p/mozaloha-rcwn
+    - service workers https://public.etherpad-mozilla.org/p/mozaloha-sw-necko
+
+QUIC  (Pat, Dragana, Daniel)
+
+
+Race-Cache-with-Network (Michal, Valentin, Junior)
+- Landed telemetry for time load difference
+- Next: racing logic + improvement telemetry
+
+Context-Driven Priority  (Honza, Kershaw, Amy, Gary, Nick)
+- maybe we should give this a read? http://web.mit.edu/ravinet/www/polaris_nsdi16.pdf
+
+PBackgroundHttp (SC, NIck)
+
+
+Nick
+- h2 coalescing rework (as a prereq for...)
+- h2 ORIGIN
+
+Honza
+
+Michal
+ - 1352916 Crash in mozilla::net::CacheFileMetadata::GetElement
+ - 1350256 Crash in mozilla::net::CacheIndex::HasEntryChanged
+ - 1325336 Generate statistics for cache performance on the given HW
+
+Patrick
+  last week: mpendingq, 256fd telemetry, 0.9 telemetry, namespaces, neat tls, alt-svc, immutable bug, some non-necko stuff
+  this week: neat tls, alt-svc, immutable bug, some non-necko stuff. more reviews.
+
+Daniel
+   landed a few security fixes (1344461 and 1346419)
+
+Valentin
+Bug 1341343 - Unable to load from alternate data after re-saving it.
+RCWN frontend (prefs + logic + bugs)
+Bug 1326175 - crash in LoadHostFilters
+
+Dragana
+IETF
+TFO
+Bug 1346368 - Crash in IPCError-browser | PNecko::Msg_PHttpChannelConstructor Value error: message was deserialized, but contained an illegal
+Bug 1352845 - Assertion failure: originAttrsLoadInfo.mPrivateBrowsingId == originAttrsLoadContext.mPrivateBrowsingId (The value of mPrivateBrowsingId in the loadContext and in the loadInfo are not the same!)
+Bug 1334776 - Header name interning leaks across origins
+
+Gary
+Bug 1351340 - Crash in mozilla::net::nsHttpChannel::ContinueProcessResponse3
+[Presto-v2] add more desktop, try to compare the same browser, test web-page-replay
+
+Junior
+Bug 1325088 - Add net-response-time-onstart/onstop to cache index
+Plan to make a quick document of cache
+
+Amy
+Bug 1351698 - Session not working anymore after switch from secure (self signed) HTTPS Session to HTTP
+*Reproducing
+Bug 1352720 - Endless loop while connecting to https://id.avast.com/ when OS clock is (a few minutes) ahead of server time
+*Reproducing
+Bug 1331680 - Consider not doing sync IPC for document.cookie getter/setter
+*Have to modify from reviewer's suggestions.
+
+Kershaw
+[CDP]
+Bug 1348819 - Potentially limit total connections for hosts referred by background tabs.
+ - f?
+
+Bug 1348053 - Channel loading content for click-to-play media should be marked as urgent-start
+ - Ask for Taipei media team's help
+
+[httpd.js]
+Bug 469228 -  Support keep-alive connections in httpd.js
+- Ready to review
+- Try server is happy now
+
+[Labeling]
+Bug 1343745 - Label runnables under netwerk/protocol/http
+ - hit an assertion when using SystemGroup's event target 
+
+SC
+[HttpChannel]
+- PBackground-ify HttpChannel IPC
+ - Bug 1320744 - HttpChannelChild should implement nsIThreadRetargetableRequest
+  - landed on m-c
+  - fixing regressions
+   - Bug 1351558 - Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::LogicError | mozilla::net::PHttpChannel::Transition
+    - TrySendDeletingChannel is not implement thread-safely
+    - fixed and landed on m-c
+   - Bug 1353660 - Crash in nsXPCWrappedJS::Release for ~HttpChannelChild
+    - base class of HttpChannelChild is not really thread-safe (nsHashPropertyBag might contain main-thread-only object)
+    - @froydnj help fix the issue in nsHashPropertyBag.
+   - Bug 1353829 - 8% Are we slim yet regression
+    - correlated to retargeting in image decoding.
+    - need a simpler STR to figure out the root cause
+   - Bug 1351450 - Intermittent test_mouse_action.py TestMouseAction.test_middle_click_action | application crashed [@ mozilla::net::ChannelEventQueue::FlushQueue()]
+    - under investigation, try reproducing it with HTTP log
+ - Bug 1015466 - PBackground-ify Necko transport to off-main-thread consumers
+  - cooking the patches
+   - cannot find a proper way to safely synchronize the IPC destruction for both PHttpChannel and background channel if diverting ODA/OnStop on background channel
+   - try only do OnStart/ODA/OnStop/OnProgress/OnStatus/FlushForDiversion/DivertMessages (parent to child message only)
+- provide suggestion and review for removing navigator.userAgent sync IPC
+

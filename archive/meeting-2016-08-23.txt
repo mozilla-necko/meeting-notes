@@ -1,0 +1,77 @@
+2016-08-23
+
+NECKO WEEKLY MEETING NOTES
+
+Thurs August 18, 2016
+STICKY
+- Triage duty: Michal starts 7/6
+-  new untriaged bugs: https://tinyurl.com/zhk9yjf
+- NECKO-ACTIVE bugs: https://tinyurl.com/j8pj35u
+- NECKO NEXT bugs: https://tinyurl.com/zjwjfee
+- NECKO-BACKLOG bugs:  https://tinyurl.com/hpkcxx3
+
+Round Table:
+ - polling/WaitForMultipleEvents
+
+
+Nick
+ - the continuing saga of the predictor leak - no witty comment this week, just sadness
+ - fixing a predictor perf issue (root cause is URIs - they're slooooooooow)
+ - telemetry & prefability of hpack table size
+ - minor misc bugs & reviews
+
+Honza
+
+Michal
+ - 1258747 Support for alternative data in CacheFile
+ - 1273832 Firefox disconnect WebSocket when I launch Java Web Start Application
+ - 1278793 Firefox Closes SignalR WebSocket connection on Form Submission
+ - 1285294 Intermittent dom/animation/test/css-animations/test_animation-cancel.html
+ - 1268587 Don't try to create cache2 dirs on and on when it once fails
+ - 1276942 Crash in shutdownhang | CacheFileContextEvictor::LoadEvictInfoFromDisk
+ - 1291347 Make CacheFileContextEvictor::EvictEntries shutdown aware
+ - 1289163 Number of empty entries created in the HTTP cache, for unexpected schemes
+
+Patrick
+  last week: mpendingq, 256fd telemetry, 0.9 telemetry, namespaces, neat tls, alt-svc, immutable bug, some non-necko stuff
+  this week: neat tls, alt-svc, immutable bug, some non-necko stuff. more reviews.
+
+Daniel
+
+Valentin
+last week:
+ reviews
+ 1264566 - [e10s] can't delete file after uploading it r?jduell
+ 1231565 - Allow storing alternate data (ex: JS Bytecode) in the HTTP cache
+next week:
+ tests for alt-data
+ 1260527 - open IPDL in HttpChannelChild earlier
+
+Dragana
+NEAT
+Bug 1242597 -       reference loop in nsSocketTransport AsyncCopy
+Bug 1264578 -       Http with TLS 1.3
+Bug 1277895 -       HTTP auth dialog gets cut off in certain circumstances
+Bug 1292522 -       with document.domain set on iframe/parent, permission denied on property-access across frame/parent when coming from different ports
+Bug 1292586 -       [e10s] Firefox Nightly Can't load Gzipped files
+Bug 1295636 -       Make clear that SetHostPort will not reset the port if the host parameter does not have a port number and add new function that does the opposite
+Bug 1296288 -       Telemetry for TLS 0RTT usage
+SDT
+
+Gary
+- Bug 1211567 - Add support for domain socket/fifo connection to proxy.
+- Bug 1287994 - Implement named pipe support on option SocksPort for Windows users
+- Bug 1291802 - PAC FindProxyForUrl function can be used to obtain full HTTPS URLs in combination with WPAD
+  - Bug 1255474 - is the original
+
+Junior
+- [landed] Bug 1276144 - Canonicalize IPv4 for nsStandardURL
+- Bug 275101 - No error message for improper url with invalid 5 digit port 
+  - have a workable patch. Going to fix try-break
+
+Amy
+Bug 976073 - prevent HTTP responses from setting cookies with secure flag
+   r-, need to modify code from the suggestions of reviewer.
+Bug 368964 - cookie "expires" attribute should be absolute, not relative to server time
+   r-, need to modify code from the suggestions of reviewer and try server.
+

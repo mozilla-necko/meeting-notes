@@ -1,0 +1,114 @@
+2016-12-22
+
+NECKO WEEKLY MEETING NOTES
+
+Thurs Dec 22, 2016
+STICKY
+- Triage duty: dragana
+-  new untriaged bugs: https://tinyurl.com/zhk9yjf
+- NECKO-ACTIVE bugs: https://tinyurl.com/j8pj35u
+- NECKO NEXT bugs: https://tinyurl.com/zjwjfee
+- NECKO-BACKLOG bugs:  https://tinyurl.com/hpkcxx3
+
+Round Table:
+    - rust-url meeting notes: https://public.etherpad-mozilla.org/p/mozloha-rust-url
+    - rcwn https://public.etherpad-mozilla.org/p/mozaloha-rcwn
+    - service workers https://public.etherpad-mozilla.org/p/mozaloha-sw-necko
+
+
+---PROJECT UPDATES---
+
+QUIC  (Pat, Dragana, Daniel)
+
+
+Race-Cache-with-Network (Michal, Valentin, Junior)
+- Landed telemetry for time load difference
+
+Context-Driven Priority  (Honza, Kershaw, Amy, Gary, Nick)
+- maybe we should give this a read? http://web.mit.edu/ravinet/www/polaris_nsdi16.pdf
+
+PBackgroundHttp (SC, NIck)
+
+
+Nick
+- fixed h2 tests - now runs on all desktop tier-1 platforms, too!
+- made h2 tests break properly next time (bounced - winxp is weird, and a pain)
+- CDP work - throttling individual channels
+- prefetch telemetry
+- h2 perf from akamai
+
+Honza
+
+Michal
+ - RCWN
+ - 1323425 Firefox crashes in [@ mozilla::dom::WebSocket::CreateAndDispatchCloseEvent ]
+ - 1272587 Add cache API to delete recent entries
+
+Patrick
+  last week: mpendingq, 256fd telemetry, 0.9 telemetry, namespaces, neat tls, alt-svc, immutable bug, some non-necko stuff
+  this week: neat tls, alt-svc, immutable bug, some non-necko stuff. more reviews.
+
+Daniel
+   NEAT
+
+Valentin
+1151899 - integrate rust-url into necko
+        - added new RustURL class which wrapps rust-url-capi
+        - ability to unit test individually
+        - nsStandardURL (may) has a reference to a RustURL object and forwards calls to it/compares the result
+1310483 - [reviewing] adds query to nsSimpleURI
+        - did a little refactoring
+        - found several inconsistencies (bugs) in setter code
+        - (small thought - it may be easier to replace this with RustURL than nsStandardURL - will investigate)
+945240 - Consider making Location.href punycode non-ASCII hostnames
+        - blocked on updating firefox UI code
+        - prerequisite to using RustURL
+1313095 - [landed] telemetry for RCWN
+
+Dragana
+Bug 1301407 -       Crash in nsNSSComponent::nsNSSComponent
+SDT
+Bug 1320252 -       early-data is empty when using TLS 1.3 over HTTP/1 (wo. ALPN) [h20/picotls]
+Bug 1320398 -       Expose function to check if early data are possible for TLS1.3
+Bug 1261585 -       nsiTraceableChannel listener not working as expected with e10s enabled
+
+Gary
+Bug 1288308 - Add support for named pipe connection to proxy.
+Bug 1311044 - non-existent Unix domain socket does not produce an error
+Bug 1311275 - Assertion failed in mozilla::net::nsIOService::GetCachedProtocolHandler
+Bug 1313641 - System proxy Settings ignored by JavaApplets since Firefox 49.0
+
+Junior
+Velocity amsterdam
+- Cache Digest
+- Prefer concat and spriting 
+Bug 482934 -       Response to a non-necko-initiated conditional request should be cached 
+- WIP, will change to use Cache2 API after discussion
+
+
+Amy
+Bug 976073- prevent HTTP responses from setting cookies with secure flag
+*land
+*Be blocked issues list:
+*Bug 1316532
+*land
+*Bug 1316542
+*land
+Bug 1312745 -  New API to mark network loads as 'throttle-able' and 'urgent-start'
+*land
+Bug 1293067 - (feature request): Implement a cookie limit warning
+*Added error message to new webconsole of dev tool.
+
+
+Kershaw
+Bug 1141814 - Lower priority of HTTP requests for resources on the Tracking Protection list and mark them as LOAD_BACKGROUND
+- All patches f+
+- File another bug for handling the load flags
+
+SC
+- Bug 1312770 -       Set image load priorities according to their position in viewport
+*investigating image layout/loading code path
+*provide possible strategy on bugzilla
+*slightly raise priority for size required image
+*raise priority to real-time priority when we create display list for that image
+*should test on 500px or Pintrest for performance measurement

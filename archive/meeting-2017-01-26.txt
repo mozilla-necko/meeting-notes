@@ -1,0 +1,125 @@
+2017-01-26
+
+NECKO WEEKLY MEETING NOTES
+
+Thurs Jan 25, 2017
+STICKY
+- Triage duty: dragana
+-  new untriaged bugs: https://tinyurl.com/zhk9yjf
+- NECKO-ACTIVE bugs: https://tinyurl.com/j8pj35u
+- NECKO NEXT bugs: https://tinyurl.com/zjwjfee
+- NECKO-BACKLOG bugs:  https://tinyurl.com/hpkcxx3
+
+Round Table:
+- Necko Taipei meeting will be April 17-21 (17th is travel/jetlag day)
+  - NEED CHECKIN/OUT dates so we can book hotel ASAP
+  - Brown bag talk to Taipei office?
+  - Activities:   escape room?  Paintball?
+
+
+---PROJECT UPDATES---
+    - rust-url meeting notes: https://public.etherpad-mozilla.org/p/mozloha-rust-url
+    - rcwn https://public.etherpad-mozilla.org/p/mozaloha-rcwn
+    - service workers https://public.etherpad-mozilla.org/p/mozaloha-sw-necko
+
+QUIC  (Pat, Dragana, Daniel)
+
+
+Race-Cache-with-Network (Michal, Valentin, Junior)
+- Landed telemetry for time load difference
+
+Context-Driven Priority  (Honza, Kershaw, Amy, Gary, Nick)
+- maybe we should give this a read? http://web.mit.edu/ravinet/www/polaris_nsdi16.pdf
+
+PBackgroundHttp (SC, NIck)
+
+
+Nick
+- vacation
+- throttling channels r?
+- h2 early-data testing
+
+Honza
+
+Michal
+ - RCWN
+ - 1300672 Websocket connection fails
+ - 1308683 Intermittent /websockets/constructor/014.html
+ - 1330277 Crash in mozilla::net::CacheFileChunkBuffer::SetDataSize
+
+Patrick
+  last week: mpendingq, 256fd telemetry, 0.9 telemetry, namespaces, neat tls, alt-svc, immutable bug, some non-necko stuff
+  this week: neat tls, alt-svc, immutable bug, some non-necko stuff. more reviews.
+
+Daniel
+   NEAT
+
+Valentin
+investigate OOM - bug 1328568 - bad website
+reviews
+Bug 1325081 - Make nsHttpChannel able to do network and cache requests at the same time
+Bug 1320088 - [Captive Portal] Detection fails when FF is open prior to engaging Wifi
+Bug 1275746 - Don't allow empty hostname for URLTYPE_AUTHORITY urls
+*- trying to reland
+
+Dragana
+SDT
+NEAT
+Bug 1261585 -       nsiTraceableChannel listener not working as expected with e10s enabled
+Bug 1328955 -       When a client tries TLS1.3 with Early Data and a server falls back to tls1.2, we should reconnect using tls 1.3 without Early Data
+
+Gary
+- Bug 1321841 - Firefox network loss after connection to Cisco VPN.
+- Unified Presto
+  - Provide this service to Mozillians
+  - Cowork with Hasal team
+
+Junior
+(land)Bug 1325325 - Check HTTP_NET_VS_CACHE_*_REVALIDATED probes for correctness
+(land)Bug 1331324 - Prevent network load time of custom conditional request from being reported
+(land)Bug 1325090 - Reduce number of HTTP_NET_VS_CACHE_ probes
+*drop the non-significant probes and merge the similar probes
+(f-)Bug 1325322 - Change HTTP_NET_VS_CACHE_ probes to cover bigger time span
+*resolution should be better. hope I can cook another patch for feedback today
+(Investigation)Bug 1325088 - Add net-response-time-onstart/onstop to cache index 
+*study cache index
+*michal sends a note of cache index
+(r?)Bug 482934 - Response to a non-necko-initiated conditional request should be cached
+*leave previous implementation as a reference, and use solution provided by honza (open the cache entry as connect and stop writing for 304 case)
+
+
+Amy
+Bug 1325909 - Add a new bucket and modify the bucket name on telemetry COOKIE_LEAVE_SECURE_ALONE.
+*Modify by Daniel’s suggestions.
+Bug 1328163 - support protocol-agnostic cookie whitelisting
+*Finished:implement part.
+*Not finish:test cases.
+Bug 1293067 - (feature request): Implement a cookie limit warning 
+*r? part one: implement.
+*r? part two: test cases.
+Bug 1312774 - Allow channels marked as "urgentStart" to bypass connection limits
+*f? Honda.
+
+Kershaw
+Bug 1326339 - Let nsHttpConnectionMgr be aware of the active tab
+- f+
+- Approach approved by bz
+
+Bug 1309653 - Give Necko the right notifications on active tab change and navigation start
+- WIP
+
+Bug 1319359 -  Not to block the throbber if the active requests in load group are all tracking requests
+- Wait for the final decision from Honza
+
+Bug 469228 -  Support keep-alive connections in httpd.js
+- Study Honza's patch
+
+SC
+[HttpChannel]
+- PBackground-ify HttpChannel IPC
+ - Bug 1325915 - remove invocation order dependency on OnProgress and OnDataAvailable in HttpChannelParent (waiting for review)
+  - update patch according to review comment, waiting for honza's review for my v2 patch
+ - Bug 1320744 - HttpChannelChild should implement nsIThreadRetargetableRequest
+  - update patch according to review comment
+  - fixing thread-safety issue found on try server, not all attributes in nsHttpChannel/HttpBaseChannel are thread-safe for Release()
+

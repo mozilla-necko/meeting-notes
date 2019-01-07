@@ -1,0 +1,118 @@
+2016-11-10
+
+NECKO WEEKLY MEETING NOTES
+
+Thurs Oct  27, 2016
+STICKY
+- Triage duty: 
+-  new untriaged bugs: https://tinyurl.com/zhk9yjf
+- NECKO-ACTIVE bugs: https://tinyurl.com/j8pj35u
+- NECKO NEXT bugs: https://tinyurl.com/zjwjfee
+- NECKO-BACKLOG bugs:  https://tinyurl.com/hpkcxx3
+
+Round Table:
+     - NTLM
+    - Dinner in Hawaii? (Tues)
+
+
+---PROJECT UPDATES---
+
+QUIC  (Pat, Dragana, Daniel)
+
+
+Race-Cache-with-Network (Michal, Valentin, Junior)
+- Landed telemetry for time load difference
+
+Context-Driven Priority  (Honza, Kershaw, Amy, Gary, Nick)
+
+PBackgroundHttp (SC, NIck)
+
+
+Nick
+- fixed h2 tests - now runs on all desktop tier-1 platforms, too!
+- made h2 tests break properly next time (bounced - winxp is weird, and a pain)
+- CDP work - throttling individual channels
+- prefetch telemetry
+- h2 perf from akamai
+
+Honza
+
+Michal
+ - triage
+ - reviews
+ - 1313095 Add telemetry probes to report load time difference between network and disk cache
+ - landed 1201042 Update HTTP cache index format to work with OriginAttributes' suffix
+ - 1272587 Add cache API to delete recent entries
+
+Patrick
+  last week: mpendingq, 256fd telemetry, 0.9 telemetry, namespaces, neat tls, alt-svc, immutable bug, some non-necko stuff
+  this week: neat tls, alt-svc, immutable bug, some non-necko stuff. more reviews.
+
+Daniel
+  ipv6 network identification code
+  QUIC-team kicked off
+   NEAT
+
+Valentin
+1151899 - integrate rust-url into necko
+        - added new RustURL class which wrapps rust-url-capi
+        - ability to unit test individually
+        - nsStandardURL (may) has a reference to a RustURL object and forwards calls to it/compares the result
+1310483 - [reviewing] adds query to nsSimpleURI
+        - did a little refactoring
+        - found several inconsistencies (bugs) in setter code
+        - (small thought - it may be easier to replace this with RustURL than nsStandardURL - will investigate)
+945240 - Consider making Location.href punycode non-ASCII hostnames
+        - blocked on updating firefox UI code
+        - prerequisite to using RustURL
+1313095 - [landed] telemetry for RCWN
+
+Dragana
+Bug 1301407 -       Crash in nsNSSComponent::nsNSSComponent
+SDT
+Bug 1315738 -       IPv6 failure on dual stack VPN - OSX
+
+Gary
+Bug 1288308 - Add support for named pipe connection to proxy.
+- r?(bagder, mayhemer)
+Bug 1311044 - non-existent Unix domain socket does not produce an error
+- r?(bagder)
+Bug 1311275 - Assertion failed in mozilla::net::nsIOService::GetCachedProtocolHandler
+- r?(mayhemer)
+
+Junior
+- prepare study group materials and retrieve MDN and wiki
+https://goo.gl/FKXYMO
+
+
+Amy
+Bug 976073- prevent HTTP responses from setting cookies with secure flag
+  - Josh r+
+  - Daniel r-:have modified the suggestions from Daniel and understand his view on the spec.
+                   mailed to Josh for discussing the potential problem of FindStaleCookie() which is mentioned from Daniel.
+Bug 1293067 - (feature request): Implement a cookie limit warning
+  - Ehsan r+, but still have to modify code from his suggestions.
+  - Also needs to ask front-end peer to review the modifications of  jsterm.js.
+Bug 1305380 -       Crash in IPCError-browser | (msgtype=0x4E0001,name=PCookieService::Msg_GetCookieString) Processing error: message was deserializ
+ - Created a  document to arrange the potential files which maybe occur the crash. and listed all modifications between 6/1 to 8/1.
+    But didn’t find any suspicious modifications.
+ - In comment 11, the crash signature is gone now.
+
+Kershaw
+Bug 1305380 -       Crash in IPCError-browser | (msgtype=0x4E0001,name=PCookieService::Msg_GetCookieString) Processing error: message was deserializ
+ - Crash is gone after 20161010004016.
+ - Could be related to PrincipalToPrincipalInfo in nsHostObjectURI::Serialize
+    http://searchfox.org/mozilla-central/rev/d96317a351af8aa78ab9847e7feed964bbaac7d7/dom/base/nsHostObjectURI.cpp#114
+Bug 1257782 -       DOS explot - hang with huge content-type header
+ - Got f+ from Patrick
+ - Still working on next patch
+
+SC
+- trying BackTrack on Linux/Mac (build success but with runtime assertion)
+- setup BackTrack on Windows
+- defining performance test cases
+  - small HTML with many external resources (JS /CSS)
+  - huge single HTML file
+  - huge image
+  - small/large size of packet
+  - from network or from cache

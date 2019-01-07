@@ -1,0 +1,121 @@
+2018-01-25
+
+NECKO WEEKLY MEETING NOTES
+
+Thurs Jan 25 2018
+
+-----------------------------------------------
+TRIAGE
+- Note: use these 2 queries when you're on triage duty: all bugs should be [necko-triaged] and have a priority
+  - UNTRIAGED bugs: https://mzl.la/2wAv7XZ
+  - MALFORMED bugs (have necko-triaged but no priority): https://mzl.la/2xXf2jc
+
+- P1 bugs  https://mzl.la/2he1C85
+- P2 bugs  https://mzl.la/2yaD1aO
+- P3 bugs  (backlog) https://mzl.la/2xcYzEL
+- P5 bugs (would take): https://mzl.la/2hdnQXy
+
+- Triage Notes
+    - Android crashes on infra are currently not symbolicated: https://bugzilla.mozilla.org/show_bug.cgi?id=1389805 (makes triaging/diagnosing android crash bugs hard/impossible)
+
+Nick  <<<<<===== Jan 18 -> Jan 25
+Honza
+Michal
+Daniel
+Valentin
+//  (skip Dragana while she's on leave)
+
+----------------------------------------------
+Round Table:
+*Q1 SCHEDULING: http://tinyurl.com/y7cqzzd9
+*Personal quarterly goals are now H1/H2 goals.  Need them by Feb 7th 
+
+
+----------------
+Nick
+- h2 crashes (raw pointers the culprit? MAYBE - in progress)
+- h2 goaway error handling (in progress)
+- h2 throttling (landed)
+- prefetch telemetry (landed)
+
+Honza
+
+Michal
+ - landed 1412320 CacheIndex::~CacheIndex is called outside CacheIndex::sLock
+ - landed 1418028 UBSan: null pointer passed as argument declared to never be null [@ mozilla::net::CacheFileMetadata::WriteMetadata]
+ - 1428169 Firefox 57, Fedora Linux, freeze on opening tabs
+ - 1403817 Split out cache stats by whether user has SSD or not
+ - 1372930 Intermittent websocket test failures
+ - 1426353 alt-data
+
+Patrick
+  last week: mpendingq, 256fd telemetry, 0.9 telemetry, namespaces, neat tls, alt-svc, immutable bug, some non-necko stuff
+  this week: neat tls, alt-svc, immutable bug, some non-necko stuff. more reviews.
+
+Daniel
+ - TRR (Trusted Recursive Resolver over DOH)
+
+Valentin
+Bug 1431204 - Make nsIURI.spec readonly
+Bug 1426019 - Use nsIThread in nsHostResolver
+Bug 1414091 - Massive leak while loading psarips.com
+
+Dragana
+http-auth dialog
+UnknownDecoder crash
+TFO
+QUIC
+NEAT
+
+
+
+
+-----------
+Gary
+Bug 1373708 - Convert Jar channels to stop using main thread I/O
+- landed to mozilla-inbound
+
+Junior
+Bug 1363284 - Allow some sharing of connections with different anonymous attributes
+- has a simple test, handling ntlm
+
+Amy
+Batch Eviction
+*Had confirmed the algorithm with Josh and Martin.
+*Martin had sent the mail to discuss the algorithm with Mike West.
+Bug 1425031 - Firefox Quantum blocks cookies when JavaScript updates them
+*Found the root cause.
+*Started to create a mochitest for this bug.
+Bug 1426471 - Cookies set via JS during anonymous screenshoting override real cookies
+*Can't reproduce.
+
+Kershaw
+Bug 1413999 - Add support for Server-Timing HTTP trailing header
+*-Landed
+Bug 1423495 - Implement PerformanceServerTiming interface
+*- backed out due to WPT failure
+Bug 1428250 - Add an API to read HTTP trailers
+*- Working
+
+SC
+[Socket Process]
+- no progress this week on my part
+[Others]
+- Bug 1426751 - Intermittent eventsource-close.htm | application crashed [@ mozilla::net::ChannelEventQueue::FlushQueue] (Assertion failure: !mFlushing, at netwerk/ipc/ChannelEventQueue.cpp:46)
+ - multiple threads trying to flush ChannelEventQueue at the same time
+ - need to check and set flag at single critical section
+ - r+’ed and landed on m-c
+- security bug
+ - discussing my proposal with @mayhemer on bugzilla
+ - trying @mayhemer's suggestion and upload my WIP, debugging test failure while running mochitest 
+ 
+ Will Wang
+[Back Pressure]
+Bug 1280629 - e10s breaks necko back pressure
+*- discussion, tracing code
+*- going to discuss the experiment for min/max queue size
+
+Cervantes
+[Socket Process]
+- patch rebase and breakage fixes
+- working on pref system

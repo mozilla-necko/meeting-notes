@@ -1,0 +1,124 @@
+2017-01-19
+
+NECKO WEEKLY MEETING NOTES
+
+Thurs Jan 19, 2017
+STICKY
+- Triage duty: dragana
+-  new untriaged bugs: https://tinyurl.com/zhk9yjf
+- NECKO-ACTIVE bugs: https://tinyurl.com/j8pj35u
+- NECKO NEXT bugs: https://tinyurl.com/zjwjfee
+- NECKO-BACKLOG bugs:  https://tinyurl.com/hpkcxx3
+
+Round Table:
+- Necko Taipei meeting will be April 17-21 (17th is travel/jetlag day)
+  - NEED CHECKIN/OUT dates so we can book hotel ASAP
+  - Brown bag talk to Taipei office?
+  - Activities:   escape room?  Paintball?
+
+
+---PROJECT UPDATES---
+    - rust-url meeting notes: https://public.etherpad-mozilla.org/p/mozloha-rust-url
+    - rcwn https://public.etherpad-mozilla.org/p/mozaloha-rcwn
+    - service workers https://public.etherpad-mozilla.org/p/mozaloha-sw-necko
+
+QUIC  (Pat, Dragana, Daniel)
+
+
+Race-Cache-with-Network (Michal, Valentin, Junior)
+- Landed telemetry for time load difference
+
+Context-Driven Priority  (Honza, Kershaw, Amy, Gary, Nick)
+- maybe we should give this a read? http://web.mit.edu/ravinet/www/polaris_nsdi16.pdf
+
+PBackgroundHttp (SC, NIck)
+
+
+Nick
+- vacation
+- throttling channels r?
+- h2 early-data testing
+
+Honza
+
+Michal
+ - reviews
+ - 1308683 Intermittent /websockets/constructor/014.html
+
+Patrick
+  last week: mpendingq, 256fd telemetry, 0.9 telemetry, namespaces, neat tls, alt-svc, immutable bug, some non-necko stuff
+  this week: neat tls, alt-svc, immutable bug, some non-necko stuff. more reviews.
+
+Daniel
+   NEAT
+
+Valentin
+investigate OOM - bug 1328568 - bad website
+reviews
+Bug 1325081 - Make nsHttpChannel able to do network and cache requests at the same time
+Bug 1320088 - [Captive Portal] Detection fails when FF is open prior to engaging Wifi
+Bug 1275746 - Don't allow empty hostname for URLTYPE_AUTHORITY urls
+*- trying to reland
+
+Dragana
+SDT
+NEAT
+Bug 1261585 -       nsiTraceableChannel listener not working as expected with e10s enabled
+Bug 1328955 -       When a client tries TLS1.3 with Early Data and a server falls back to tls1.2, we should reconnect using tls 1.3 without Early Data
+
+Gary
+- http://cdp.xeon.tw/
+  - integrate webpagetest private instance and presto-plot
+  - plan to integrate presto/presto-wpt/presto-plot
+
+Junior
+Bug 482934 -       Response to a non-necko-initiated conditional request should be cached 
+- r+(michal), r?(honza)
+Bug 1325325 -       Check HTTP_NET_VS_CACHE_*_REVALIDATED probes for correctness
+- WIP, found root cause
+
+
+Amy
+Bug 1325909 - Add a new bucket and modify the bucket name on telemetry COOKIE_LEAVE_SECURE_ALONE.
+*Modify by Daniel’s suggestions.
+Bug 1328163 - support protocol-agnostic cookie whitelisting
+*Finished:implement part.
+*Not finish:test cases.
+Bug 1293067 - (feature request): Implement a cookie limit warning 
+*r? part one: implement.
+*r? part two: test cases.
+Bug 1312774 - Allow channels marked as "urgentStart" to bypass connection limits
+*f? Honda.
+
+Kershaw
+Bug 1326339 - Let nsHttpConnectionMgr be aware of the active tab
+- f+
+- Approach approved by bz
+
+Bug 1309653 - Give Necko the right notifications on active tab change and navigation start
+- WIP
+
+Bug 1319359 -  Not to block the throbber if the active requests in load group are all tracking requests
+- Wait for the final decision from Honza
+
+Bug 469228 -  Support keep-alive connections in httpd.js
+- Study Honza's patch
+
+SC
+[HttpChannel]
+- Bug 1329089 - File upload blocks the following XHR requests in LAN (landed on m-c)
+ - write too much to socket output stream in single OnSocketWritable callback
+- PBackground-ify HttpChannel IPC
+ - Bug 1325915 - remove invocation order dependency on OnProgress and OnDataAvailable in HttpChannelParent (waiting for review)
+  - derive all information in ODA without waiting for OnProgress/OnStatus
+ - Bug 1320744 - HttpChannelChild should implement nsIThreadRetargetableRequest (waiting for review)
+  - try bring back retargetability on content process, no performance gain at this moment
+ - Bug 1015466 - PBackground-ify Necko transport to off-main-thread consumers (preparing WIP)
+  - try moving entire PHttpChannel.ipdl to PBackground, seems to affect PChannelDiverter.ipdl, PFTPChannel.ipdl, PAltDataOutputStream.ipdl as well
+[UDPSocket]
+- Bug 1326483 - UDP socket child allows network connectivity in offline mode (landed on m-c)
+ - Bug 1330490 - memset 0 of the entire PRNetAddr in PR_InitializeNetAddr (waiting for review)
+  - provide general fix for all PR_InitializeNetAddr user
+- Bug 1311251 - Crash in PR_Connect | mozilla::net::nsUDPSocket::Connect (landed on m-c)
+  - simple null-checking patch is landed on m-c, waiting for uplifting
+

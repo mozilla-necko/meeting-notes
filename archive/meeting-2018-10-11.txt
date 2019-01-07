@@ -1,0 +1,76 @@
+
+Thurs Oct 11, 2018
+
+Triage: Junior
+
+Round Table:
+
+* [https://bugzilla.mozilla.org/show_bug.cgi?id=1497543](https://bugzilla.mozilla.org/show_bug.cgi?id=1497543)  
+
+* What is our state of the art for storing data? (AltSvc currently uses PSM DataStorage, may not be what we need for full fix to 1493724)
+
+Nick
+
+* H2ws submitted for review (yaaaaay!)
+
+* Bunches of h2 error case handling (1496611, 1050329, 1355858)
+
+* AltSvc funkiness (1493724) (see also round table)
+
+Honza
+
+* picked up work on backtrack 
+
+* socket process isolation project - setting up meetings?
+
+    * nika? please CC selena on email
+
+    * documentation on fission? sandboxing and how processes will be structured
+
+Michal
+
+* 1487101 We might be leaking images that reload many times over a long period
+
+* 1478157 A WebSocket connection over a proxy periodically disconnects with 1006
+
+Daniel
+
+* TRR crash due to originSuffix mistake
+
+* TRR study #5
+
+Valentin
+
+[TRIAGE]
+
+Bug 1500861 - Add shutdownWithTimeout method to nsIThread and nsIThreadPool
+
+Bug 1349316 - Include dotted forms from Latin Extended Additional unicode block for IDNA
+
+Connectivity checker [landed]
+
+Resource timing bug
+
+Hunting down WPT leaks
+
+Dragana
+
+quic
+
+Junior
+
+* [Bug 1498434 - add new telemetry probe to know the delay caused by e10s back pressure](https://bugzilla.mozilla.org/show_bug.cgi?id=1498434)
+
+* [Bug 1487559 - add new telemetry probe for the content policy causing suspension for back pressure](https://bugzilla.mozilla.org/show_bug.cgi?id=1487559)
+
+ 
+
+Kershaw
+
+* Bug 1486033 - Add plumbing for Telemetry for new network process
+
+* Study PBackground code
+
+* bug regarding proxy pac? 1219935
+
+* * *

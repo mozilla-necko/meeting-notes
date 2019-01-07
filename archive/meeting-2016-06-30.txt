@@ -1,0 +1,48 @@
+2016-06-30
+
+NECKO WEEKLY MEETING NOTES
+
+Thurs June 29, 20168
+STICKY
+- Triage duty: Honza starts 6/30
+-  new untriaged bugs: https://tinyurl.com/zhk9yjf
+- NECKO-ACTIVE bugs: https://tinyurl.com/j8pj35u
+- NECKO NEXT bugs: https://tinyurl.com/zjwjfee
+- NECKO-BACKLOG bugs:  https://tinyurl.com/hpkcxx3
+
+Round Table:
+- Vienna workweek: Oct 3-7 (or Oct 17-21)
+- Necko meeting times will now alternate weeks between
+  - regular Thurs 9 AM PST
+  - midnight PST (9 AM Central Europe, 3 PM Taipei) on Thursday.
+
+Nick
+ - predictor stuff - "losing" cookies (patch ready)
+ - predictor stuff - leaks (very intermittent, running under rr in a loop until proper failure occurs. maybe i'll have something after london?)
+
+Honza
+backtrack
+
+
+Michal
+  - 1258747 Have a programmatic limit for CacheFileInputStream reading
+
+Patrick
+  last week: mpendingq, 256fd telemetry, 0.9 telemetry, namespaces, neat tls, alt-svc, immutable bug, some non-necko stuff
+  this week: neat tls, alt-svc, immutable bug, some non-necko stuff. more reviews.
+
+Daniel
+
+
+Valentin
+1277582, 1277961 - PNeckoChild::SendPHttpChannelConstructor called during shutdown
+1260527 - Change HttpChannelChild to open IPDL earlier than AsyncOpen
+1231565 - Allow storing alternate data (ex: JS Bytecode) in the HTTP cache
+
+Dragana
+1230462  has a test failure
+1261585 nsiTraceableChannel listener not working as expected with e10s enabled     
+968273 Entered URL in firefox, Firefox remember old redirect and i get the wrong page      - regression   
+TLS1.3
+NEAT
+

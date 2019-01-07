@@ -1,0 +1,115 @@
+2018-07-26
+
+NECKO WEEKLY MEETING NOTES
+
+Thurs July 19th 2018
+
+-----------------------------------------------
+TRIAGE: see https://public.etherpad-mozilla.org/p/necko-triage-guide for how-to
+
+Nick
+Honza
+Michal <<<<<===== July 27 to August 2
+Daniel
+Valentin
+Junior
+//  (skip Dragana till she's back full-time)
+
+----------------------------------------------
+Round Table:
+
+- Kershaw (Berlin, August 1st), Junior (Portland, July 15th)
+
+
+----------------
+Nick
+- h2 crash 1 - r+, awaiting sec-approbal
+- h2 crash 2 - seems to be enterprisey (good number during week, not so much on weekend), waiting/hoping for input from outside
+- h2 trailers - patch first round written, waiting for third-party endpoint to test against
+- server-timing - made it https-only
+- cookie limiting & batch eviction - in progress
+- h2 websockets - starting soon
+- predictor prefetch - waiting on yoathrizon
+
+Honza
+ni? 1463729 (fast net, slow logging IO -> hang socket thread in an endless loop, h2)
+smb proxy bypass - ni? valentin
+
+Michal
+ - landed 1466577 Crash in arena_dalloc | Allocator<T>::free | MOZ_Z_inflateEnd
+ - 1477684 rcwn blocking some xmlHttpRequests
+ - 1475701 Save Page As doesn't begin MP3 download while tab is open
+ - 1428901 Persist TLS session tickets across browsing sessions
+
+Patrick
+  last week: mpendingq, 256fd telemetry, 0.9 telemetry, namespaces, neat tls, alt-svc, immutable bug, some non-necko stuff
+  this week: neat tls, alt-svc, immutable bug, some non-necko stuff. more reviews.
+
+Daniel
+ - TRR stuff
+ - fastblock
+
+Valentin
+bug 1478732 - resolver thread dispatch tasks instead of locking
+Bug 1476928 - Remove nsIURI.CloneIgnoringRef and nsIURI.CloneWithNewRef [landed]
+bug 1476996 - cross process redirect impl
+bug 1416623 - socket process WIP
+
+
+
+Dragana
+http-auth dialog
+UnknownDecoder crash
+TFO
+QUIC
+NEAT
+
+Junior
+e10s backpressure
+
+
+-----------
+Gary
+Bug 1373708 - Convert Jar channels to stop using main thread I/O
+- landed to mozilla-inbound
+
+Amy
+Batch Eviction
+*Had confirmed the algorithm with Josh and Martin.
+*Martin had sent the mail to discuss the algorithm with Mike West.
+Bug 1425031 - Firefox Quantum blocks cookies when JavaScript updates them
+*Found the root cause.
+*Started to create a mochitest for this bug.
+Bug 1426471 - Cookies set via JS during anonymous screenshoting override real cookies
+*Can't reproduce.
+
+Kershaw
+Bug 1413999 - Add support for Server-Timing HTTP trailing header
+*-Landed
+Bug 1423495 - Implement PerformanceServerTiming interface
+*- backed out due to WPT failure
+Bug 1428250 - Add an API to read HTTP trailers
+*- Working
+
+SC
+[Socket Process]
+- no progress this week on my part
+[Others]
+- Bug 1426751 - Intermittent eventsource-close.htm | application crashed [@ mozilla::net::ChannelEventQueue::FlushQueue] (Assertion failure: !mFlushing, at netwerk/ipc/ChannelEventQueue.cpp:46)
+ - multiple threads trying to flush ChannelEventQueue at the same time
+ - need to check and set flag at single critical section
+ - r+’ed and landed on m-c
+- security bug
+ - discussing my proposal with @mayhemer on bugzilla
+ - trying @mayhemer's suggestion and upload my WIP, debugging test failure while running mochitest 
+ 
+ Will Wang
+[Back Pressure]
+Bug 1280629 - e10s breaks necko back pressure
+*- discussion, tracing code
+*- going to discuss the experiment for min/max queue size
+
+Cervantes
+[Socket Process]
+- patch rebase and breakage fixes
+- working on pref system

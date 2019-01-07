@@ -1,0 +1,113 @@
+2017-05-25
+
+NECKO WEEKLY MEETING NOTES
+
+Thurs May 25th, 2017
+STICKY
+- Triage duty: dragana
+-  new untriaged bugs: https://tinyurl.com/zhk9yjf
+- NECKO-ACTIVE bugs: https://tinyurl.com/j8pj35u
+- NECKO NEXT bugs: https://tinyurl.com/zjwjfee
+- NECKO-BACKLOG bugs:  https://tinyurl.com/hpkcxx3
+
+Round Table:
+- "Reference hardware" (3-4 Acer Laptops) so we have a standard for performance metrics 
+- people.mozilla.org going away
+
+---PROJECT UPDATES---
+    - rust-url meeting notes: https://public.etherpad-mozilla.org/p/mozloha-rust-url
+    - rcwn https://public.etherpad-mozilla.org/p/mozaloha-rcwn
+    - service workers https://public.etherpad-mozilla.org/p/mozaloha-sw-necko
+
+QUIC  (Pat, Dragana, Daniel)
+
+
+Race-Cache-with-Network (Michal, Valentin, Junior)
+- Enabled on nightly for a while
+- Next: land performance stats
+
+Context-Driven Priority  (Honza, Kershaw, Amy, Gary, Nick)
+- maybe we should give this a read? http://web.mit.edu/ravinet/www/polaris_nsdi16.pdf
+
+PBackgroundHttp (SC, NIck)
+
+
+Nick
+- NTLM Hell
+
+Honza
+
+Michal
+ - triage
+ - RCWN
+ - 1177909 websocket doesn't work if firefox uses the system's proxy settings on ubuntu linux
+ - 1365773 Firefox incorrectly appends top level domain to the host name when processing HTTP 401 authentication
+
+Patrick
+  last week: mpendingq, 256fd telemetry, 0.9 telemetry, namespaces, neat tls, alt-svc, immutable bug, some non-necko stuff
+  this week: neat tls, alt-svc, immutable bug, some non-necko stuff. more reviews.
+
+Daniel
+  - 1359639 - (sec-critical) heap-buffer-overflow READ size 4 in [@ nsDirIndexParser::ParseData] (to land on the 22nd)
+  - 1360164 - The first async XHR done during startup blocks the main thread while initializing nsProtocolProxyService
+    (- 1363989 windows build error)
+  - 1364250 - Move JAR channel I/O off of main thread
+  - 356831 - Proxy autodiscovery doesn't check DHCP ( "sorta")
+
+Valentin
+bug 945240 - make URLs hold punycode hosts
+bug 1359697 - don't poll for CP detection
+bug 1356097 - investigate weird telemetry metrics
+
+
+Dragana
+TFO
+rel=preload
+Bug 1364372 - Audit SpeculativeConnect Telemetry with TFO
+Bug 1364189 - Make sure not to retry socketTransaction if nsHttpConnectionMgr cancels it
+
+Gary
+webpagetest is running through mitmproxy in transparent proxy mode.
+Bug 1341266 - Set the highest priority when the transaction marked urgent-start on http2.
+
+Junior
+Bug 867798 - Cookie Service closes DB on main thread (investigation)
+Bug 1354407 - Add new telemetry probe for saved time when we rcwn(land)
+Bug 1354405 - Add new telemetry probe for bandwidth cost based on average cache hit when we rcwn(checkin needed)
+Bug 1363472 - Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::FatalError | mozilla::net::PNeckoChild::SendPWyciwygChannelConstructor(land)
+Bug 1363659 - Prevent mozilla::ipc::FatalError from mozilla::net::PNeckoChild::SendP*Constructor(follow-up)
+
+Amy
+Bug 1331680 - Consider not doing sync IPC for document.cookie getter/setter
+*Josh offered a new design on comment 100. 
+*I have finished to modify the data struct and operation on the document hash table.
+
+Kershaw
+[CDP]
+Bug 1312515 - Lower priority of HTTP requests coming from tracking scripts
+ - r+
+ - Working on test case
+
+Bug 1360581 - HTTP channel TP annotation happens too late
+- WIP
+
+[Labeling]
+Bug 1343743 - Label IPC actors in necko
+ - WIP
+
+SC
+[HttpChannel]
+- PBackground-ify HttpChannel IPC
+ - Bug 1015466 - PBackground-ify for ODA IPC
+  - r+'ed for part 0 ~ 3, review comment addressed
+  - upload final part 4, try looks good, waiting for @mayhemer's review
+  - running talos to compare the performance difference
+ - Bug 1338493 - move HttpChannel IPC from main thread to STS thread in content process
+   - WIP provided, tested with page load, image rendering, video rendering on Linux
+ - fix intermittent debug assertion Bug 1354455 -> should also fix Bug 1362626
+[Quantum Flow]
+- Bug 1363421 - UserAgentOverrides.jsm is visible on startup profiles
+  - try delay it until the creation of nsHttpHandler, got backout'ed
+  - update patch to delay it until the first nsHttpChannel is created, try looks good, waiting for @mcmanus's review
+- Bug 1365566 - Use PR_GetSystemInfo to get OS version instead of using system info
+  - upload a patch to workaround system info slowness, try looks good, waiting for @dragana's review

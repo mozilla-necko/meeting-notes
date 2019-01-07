@@ -1,0 +1,203 @@
+
+**Thurs Nov 8 2018**
+
+Round Table: 
+
+* Sync and debugging: [https://bugzilla.mozilla.org/show_bug.cgi?id=1409570#c28](https://bugzilla.mozilla.org/show_bug.cgi?id=1409570#c28)
+
+    * related idea: we’re dumping lots of information wrt H2, stop dumping the table for every compression operation (nick to file a bug)
+
+    * sync -- by default in about networking, so that we get the data with crashes
+
+    * Future work: think about our logging situation and propose a way forward... someday -- or ask for 6 aka "turn it up to 11"
+
+* Unassigned p1: https://bugzilla.mozilla.org/show_bug.cgi?id=1418134
+
+    * moved to overholt
+
+* Unassigned p2s - selena is working through it (see below)
+
+* [selena] First party isolation for cache
+
+    * dragana / ehsan discussing
+
+    * step 1: telemetry on penalty for doing it; nick to pick it up in a few weeks
+
+        * bug? next step: open a bug -- dragana please :)
+
+* triage issues:
+
+    * [https://bugzilla.mozilla.org/show_bug.cgi?id=1505366](https://bugzilla.mozilla.org/show_bug.cgi?id=1505366)  - assigned to daniel
+
+    * [https://bugzilla.mozilla.org/show_bug.cgi?id=1358043](https://bugzilla.mozilla.org/show_bug.cgi?id=1358043) - reproducing crashes on Android?
+
+    * [https://bugzilla.mozilla.org/show_bug.cgi?id=1451293](https://bugzilla.mozilla.org/show_bug.cgi?id=1451293) 
+
+        * honza - open a bug for the audit
+
+    * [https://bugzilla.mozilla.org/show_bug.cgi?id=1321466#c27](https://bugzilla.mozilla.org/show_bug.cgi?id=1321466#c27) how much work is this? 
+
+    * [https://bugzilla.mozilla.org/show_bug.cgi?id=1340200](https://bugzilla.mozilla.org/show_bug.cgi?id=1340200)
+
+        * Chrome implementation [https://bugs.chromium.org/p/chromium/issues/detail?id=435547](https://bugs.chromium.org/p/chromium/issues/detail?id=435547) 
+
+    * [https://bugzilla.mozilla.org/show_bug.cgi?id=1342484](https://bugzilla.mozilla.org/show_bug.cgi?id=1342484) - service workers
+
+    * [https://bugzilla.mozilla.org/show_bug.cgi?id=1356686](https://bugzilla.mozilla.org/show_bug.cgi?id=1356686) - brotli decompression, can we devise a test / maybe with facebook? 
+
+        * honza close these out if they are fixed :)
+
+* [honza] many P2 -> P3 for inactivity (by Sylvester)
+
+    * surprised! 1 year of inactivity
+
+    * selena: get a list from sylvestre of what changes; schedule a q3 triage pass
+
+* [honza] stricter tracker annotation list on Nightly -> affects tailing
+
+    * [https://bugzilla.mozilla.org/show_bug.cgi?id=1501461](https://bugzilla.mozilla.org/show_bug.cgi?id=1501461)
+
+        * Fonts!
+
+        * need tests to show that tailing is helping / not helping -- ran a study on beta; pref flip - zero difference
+
+    * The flip pref bug:[ https://bugzilla.mozilla.org/show_bug.cgi?id=1434379](https://bugzilla.mozilla.org/show_bug.cgi?id=1434379)
+
+    * Some graphs not linked in the bug:
+
+    * [https://moz-experiments-viewer.herokuapp.com/?ds=pref-flip-tracker-request-beta-1434379&metrics=ALL&next=%2F&pop=ALL&scale=linear&showOutliers=false](https://moz-experiments-viewer.herokuapp.com/?ds=pref-flip-tracker-request-beta-1434379&metrics=ALL&next=%2F&pop=ALL&scale=linear&showOutliers=false)
+
+* [https://bugzilla.mozilla.org/show_bug.cgi?id=1503393](https://bugzilla.mozilla.org/show_bug.cgi?id=1503393) - proxy conf + UI, how to proceed with the UI patch while the bug is a sec bug?
+
+    * Target landing 67 ? dolske
+
+    * selena to figure out how to get UX support
+
+* Meeting invites
+
+Nick
+
+* 1502678 - Referer not sent with rel="noopener” (not us - docshell doesn’t even get referrer)
+
+* 1503578 - Check h2 logs for why ctrl+f5 not reloading all resources (seems 0rtt related)
+
+* 1312057 - Prefetch use telemetry (in prep for re-enabling on prerelease channels)
+
+* Intermittent Raptor slowness (server related?)
+
+* 1504337 - Consider using http/1.1 on cell connections (interesting paper linked)
+
+* 1501357 - Funky protocol field in devtools
+
+* Landed h2ws
+
+* 1505388 - h2 proxy crash (fallout from h2ws)
+
+* 1498661 - Conn racing - need to fix dns lookup on secondary conn
+
+Michal
+
+* 1503578 Ctrl + F5 doesn't load all the resources of the web
+
+* 1455723 Firefox59 does not properly honor cache size set in autoconfig files
+
+* 1500533 Ensure that TLS session tickets are only consumed if storage checks on the channel pass
+
+Honza
+
+  BT, 
+
+[1418134](https://bugzilla.mozilla.org/show_bug.cgi?id=1418134) - sec bug (nav spoof?), 
+
+[1482084](https://bugzilla.mozilla.org/show_bug.cgi?id=1482084) - sec bug (stream data crash), 
+
+[Bug 1505493 - Retarget nsHttpChannel handled by HttpChannelParent to a background thread, avoid main thread loop on critical path](https://bugzilla.mozilla.org/show_bug.cgi?id=1505493)
+
+[Bug 1482599 - Landsend online purchase payment error](https://bugzilla.mozilla.org/show_bug.cgi?id=1482599) (let users easily run logging locally)
+
+[Bug 1303314 - network.automatic-ntlm-auth.allow-non-fqdn does not work](https://bugzilla.mozilla.org/show_bug.cgi?id=1303314) (need to look into the code)
+
+Daniel
+
+  (can’t attend today)
+
+TRR study #5 work. Will measure transfer times using Akamai servers
+
+Bug [1504109](https://bugzilla.mozilla.org/show_bug.cgi?id=1504109) - archive.is doesn’t work when DoH is used
+
+Bug [1503517](https://bugzilla.mozilla.org/show_bug.cgi?id=1503517) - whitespace cleaning for X-Content-Type-Options
+
+Bug [1505033](https://bugzilla.mozilla.org/show_bug.cgi?id=1505033) - DoH with VPN
+
+Bug [1503393](https://bugzilla.mozilla.org/show_bug.cgi?id=1503393) - prevent "localhost" from going to *any* proxy
+
+Bug [1505366](https://bugzilla.mozilla.org/show_bug.cgi?id=1505366) - a DOM:Networking lastModified test fail 
+
+Valentin
+
+  Bug 1487964 - resource timing
+
+    R+d… backporting
+
+  Bug 1502025 - Use captive portal service to perform connectivity checks
+
+  Bug 1495313 - Allow password without username in URL
+
+  Bug 1500863 - Use GetAddrInfoEx to resolve hosts on windows
+
+Dragana
+
+IETF - will share a writeup
+
+DoH
+
+[Bug 1502641 ](https://bugzilla.mozilla.org/show_bug.cgi?id=1502641)Crash in _purecall | nsHostRecord::~nsHostRecord
+
+Fission
+
+TFO disabled because of tracking, also fix TFO bug with SOCKS
+
+Kershaw
+
+* [ Bug 1503834 [socket-proc] Create PBackground between the socket process socket thread and content process](https://bugzilla.mozilla.org/show_bug.cgi?id=1503834)
+
+    * r?
+
+* [ Bug 1407384 Make notifications respect channel.suspend](https://bugzilla.mozilla.org/show_bug.cgi?id=1407384)
+
+    * r?
+
+* [ Bug 1494585 Create IPC between ContentProcess and SocketProcess](https://bugzilla.mozilla.org/show_bug.cgi?id=1494585)
+
+    * r?
+
+* [ Bug 1387355 EventSource: ignore IDs with U+0000](https://bugzilla.mozilla.org/show_bug.cgi?id=1387355)
+
+    * Handle the case when there is \0 in the data
+
+Junior
+
+* [Bug 1277496 - Attribute 'origin' is should be uppercase 'Origin' in firefox request header](https://bugzilla.mozilla.org/show_bug.cgi?id=1277496)
+
+* land
+
+* [Bug 1503736 - Origin header honors network.http.referer.hideOnionSource](https://bugzilla.mozilla.org/show_bug.cgi?id=1503736)
+
+* r? ([ckerschb](https://phabricator.services.mozilla.com/p/ckerschb/))
+
+* [Bug 1504323 - Enable ESLint for netwerk/test/httpserver/](https://bugzilla.mozilla.org/show_bug.cgi?id=1504323)
+
+* P1 autochange - r? (dragana)
+
+* P2 manual change- r+
+
+* [Bug 1494364 - don't prune proxy if all non-direct proxies are disabled](https://bugzilla.mozilla.org/attachment.cgi?id=9021951)
+
+* Land
+
+* [Bug 1504085 - HTTPS to HTTP loads should get an Origin header with "null"](https://bugzilla.mozilla.org/show_bug.cgi?id=1504085)
+
+* Daniel Veditz doubts this in [Comment 3](https://bugzilla.mozilla.org/show_bug.cgi?id=1504085#c3)
+
+* * *
+

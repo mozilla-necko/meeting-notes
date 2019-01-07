@@ -1,0 +1,124 @@
+2017-05-04
+
+NECKO WEEKLY MEETING NOTES
+
+Thurs May 3rd, 2017
+STICKY
+- Triage duty: dragana
+-  new untriaged bugs: https://tinyurl.com/zhk9yjf
+- NECKO-ACTIVE bugs: https://tinyurl.com/j8pj35u
+- NECKO NEXT bugs: https://tinyurl.com/zjwjfee
+- NECKO-BACKLOG bugs:  https://tinyurl.com/hpkcxx3
+
+Round Table:
+
+
+
+---PROJECT UPDATES---
+    - rust-url meeting notes: https://public.etherpad-mozilla.org/p/mozloha-rust-url
+    - rcwn https://public.etherpad-mozilla.org/p/mozaloha-rcwn
+    - service workers https://public.etherpad-mozilla.org/p/mozaloha-sw-necko
+
+QUIC  (Pat, Dragana, Daniel)
+
+
+Race-Cache-with-Network (Michal, Valentin, Junior)
+- Landed telemetry for time load difference
+- Next: racing logic + improvement telemetry
+
+Context-Driven Priority  (Honza, Kershaw, Amy, Gary, Nick)
+- maybe we should give this a read? http://web.mit.edu/ravinet/www/polaris_nsdi16.pdf
+
+PBackgroundHttp (SC, NIck)
+
+
+Nick
+- h2 coalescing rework (as a prereq for...)
+- h2 ORIGIN
+
+Honza
+
+Michal
+ - reviews
+ - 1313934 Assertion failure: !mCallback || mInReadSegments, at CacheFileInputStream.cpp:270
+ - 1352916 Crash in mozilla::net::CacheFileMetadata::GetElement
+ - 1361435 Remove references to unused pref network.http.bypass-cachelock-threshold
+ - 1325336 Generate statistics for cache performance on the given HW
+
+Patrick
+  last week: mpendingq, 256fd telemetry, 0.9 telemetry, namespaces, neat tls, alt-svc, immutable bug, some non-necko stuff
+  this week: neat tls, alt-svc, immutable bug, some non-necko stuff. more reviews.
+
+Daniel
+  - 1359639 - (sec-critical) heap-buffer-overflow READ size 4 in [@ nsDirIndexParser::ParseData]
+  - 1330795 - Basic HTTP auth fails on Linksys WRT120N  
+  - 1360164 - The first async XHR done during startup blocks the main thread while initializing nsProtocolProxyService
+  - 1358932 - Firefox needs to be restarted if launched before the network connection is active
+  - QUIC discussions
+
+Valentin
+Bug 1341343 - Unable to load from alternate data after re-saving it.
+RCWN frontend (prefs + logic + bugs)
+Bug 1326175 - crash in LoadHostFilters
+
+Dragana
+IETF
+TFO
+Bug 1346368 - Crash in IPCError-browser | PNecko::Msg_PHttpChannelConstructor Value error: message was deserialized, but contained an illegal
+Bug 1352845 - Assertion failure: originAttrsLoadInfo.mPrivateBrowsingId == originAttrsLoadContext.mPrivateBrowsingId (The value of mPrivateBrowsingId in the loadContext and in the loadInfo are not the same!)
+Bug 1334776 - Header name interning leaks across origins
+
+Gary
+web-page-replay doesn't support HTTPS, use mitmproxy instead.
+Bug 1355782 - Throttling should stop reading data from an h2 stream
+
+Junior
+Bug 711886 - Refuse connection if server replies with non-matching subprotocol(land)
+Bug 1354407 - Add new telemetry probe for saved time when we rcwn(f+)
+Bug 1354405 - Add new telemetry probe for bandwidth cost based on average cache hit when we rcwn(f+)
+Bug 1360163 - Add test for altData of cache index(r+)
+Bug 1359951 - Crash in mozalloc_abort | NS_DebugBreak | mozilla::ipc::FatalError | mozilla::net::PNeckoChild::SendPWebSocketConstructor(r+)
+
+Amy
+Bug 1331680 - Consider not doing sync IPC for document.cookie getter/setter
+*implementation part1--create & set load flag.
+*f-
+*Josh suggested some test cases to verify the accuracy.
+*implementation part2 -- data struct
+*f?
+*implementation part3 -- http channel
+*f?
+*implementation part4 -- cookie service
+*f?
+*implementation part5 --- Destroy cookie
+*f?
+*Implemented a test html page.
+
+Kershaw
+[CDP]
+Bug 1312515 - Lower priority of HTTP requests coming from tracking scripts
+ - WIP
+
+Bug 1360549 - Crash in IPCError-browser | PNecko::Msg_NotifyCurrentTopLevelOuterContentWindowId Route error: message sent to unknown actor ID
+ - landed
+
+[Labeling]
+Bug 1352176 - Label the use of NS_New(In|Out)putStreamReadyEvent in netwerk
+ - r?
+
+SC
+[HttpChannel]
+- CDP for image prioritization
+ - all 4 bugs are landed on m-c
+  - need some good websites to evaluate the effect on WPT
+- PBackground-ify HttpChannel IPC
+ - Bug 1015466 - PBackground-ify for ODA IPC
+  - cooking the patches
+   - lifecycle management looks good on try (memleak issue in previous patch is fixed), will upload for review
+   - move OnStartRequest back to main thread IPC due to the corelation between PContent::SetPermissionsWithKey
+    - use return value for async IPC to ensure HttpChannelChild receives OnStartRequest before ODA
+    - fixing test case failure before submitting for review
+ - Bug 1357682 - telemetry for retargetable successful rate
+  - @bsmedberg is asking for detailed execution plan on this new data
+  - @mayhemer provide some feedback
+  - need discuss about how to proceed on this bug

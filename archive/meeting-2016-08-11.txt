@@ -1,0 +1,53 @@
+2016-08-11
+
+NECKO WEEKLY MEETING NOTES
+
+Thurs August 4, 2016
+STICKY
+- Triage duty: Michal starts 7/6
+-  new untriaged bugs: https://tinyurl.com/zhk9yjf
+- NECKO-ACTIVE bugs: https://tinyurl.com/j8pj35u
+- NECKO NEXT bugs: https://tinyurl.com/zjwjfee
+- NECKO-BACKLOG bugs:  https://tinyurl.com/hpkcxx3
+
+Round Table:
+  Bug 1292181 -  Crash in shutdownhang | WaitForSingleObjectEx | WaitForSingleObject | PR_WaitCondVar | mozilla::CondVar::Wait | nsEventQueue::GetEvent on 49Beta
+  we will need openVPN again maybe
+
+Nick
+ - the continuing saga of the predictor leak - more tactics to try this week (didn't repro in 1k+ runs under rr, but repros 5-10 of 100 times on try!)
+ - spdy is dead (disabled in 50, removed in 51), long live spdy (we still have "spdy" all over the code & prefs)!
+ - bunch of minor misc bugs & reviews
+
+
+Michal
+ - 1258747 Support for alternative data in CacheFile
+ - 1273832 Firefox disconnect WebSocket when I launch Java Web Start Application
+ - 1278793 Firefox Closes SignalR WebSocket connection on Form Submission
+ - 1285294 Intermittent dom/animation/test/css-animations/test_animation-cancel.html
+ - 1268587 Don't try to create cache2 dirs on and on when it once fails
+ - 1276942 Crash in shutdownhang | CacheFileContextEvictor::LoadEvictInfoFromDisk
+ - 1291347 Make CacheFileContextEvictor::EvictEntries shutdown aware
+ - 1289163 Number of empty entries created in the HTTP cache, for unexpected schemes
+
+Patrick
+  last week: mpendingq, 256fd telemetry, 0.9 telemetry, namespaces, neat tls, alt-svc, immutable bug, some non-necko stuff
+  this week: neat tls, alt-svc, immutable bug, some non-necko stuff. more reviews.
+
+Daniel
+
+
+Valentin
+last week:
+ reviews
+ 1264566 - [e10s] can't delete file after uploading it r?jduell
+ 1231565 - Allow storing alternate data (ex: JS Bytecode) in the HTTP cache
+next week:
+ tests for alt-data
+ 1260527 - open IPDL in HttpChannelChild earlier
+
+
+Dragana
+SDT
+NEAT
+

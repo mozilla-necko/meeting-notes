@@ -1,0 +1,70 @@
+
+**Nov 15 2018**
+
+Honza
+
+* BT
+
+* P1 - [Bug 1506965 - Data race between HttpChannelChild's NeedToReportBytesRead() and Release()](https://bugzilla.mozilla.org/show_bug.cgi?id=1506965)
+
+* [1482084](https://bugzilla.mozilla.org/show_bug.cgi?id=1482084) (buffer of)
+
+* [Bug 1457768 - miss redirect request after 302 with range header](https://bugzilla.mozilla.org/show_bug.cgi?id=1457768)
+
+Michal
+
+* 1358038 Add "Race Cache With Network" status to netmonitor
+
+* 1507467 Make sure mAfterOnStartRequestBegun is true for channels loaded with LOAD_ONLY_IF_MODIFIED
+
+* 1500533 Ensure that TLS session tickets are only consumed if storage checks on the channel pass
+
+* 1455723 Firefox59 does not properly honor cache size set in autoconfig files
+
+* 1506534 Collect telemetry to measure how much penalty we will experience with first-party cache isolation
+
+Kershaw
+
+* [ Bug 1503834 [socket-proc] Create PBackground between the socket process socket thread and content process](https://bugzilla.mozilla.org/show_bug.cgi?id=1503834)
+
+    * r+
+
+* [ Bug 1407384 Make notifications respect channel.suspend](https://bugzilla.mozilla.org/show_bug.cgi?id=1407384)
+
+    * r?
+
+* [ Bug 1494585 Create IPC between ContentProcess and SocketProcess](https://bugzilla.mozilla.org/show_bug.cgi?id=1494585)
+
+    * r+
+
+* [ Bug 1387355 EventSource: ignore IDs with U+0000](https://bugzilla.mozilla.org/show_bug.cgi?id=1387355)
+
+    * r?
+
+* [ Bug 1478280 samesite=strict prevents reading the cookie after a xhr request](https://bugzilla.mozilla.org/show_bug.cgi?id=1478280)
+
+    * Working
+
+* [ Bug 1492843 TCP connection reset by F5](https://bugzilla.mozilla.org/show_bug.cgi?id=1492843)
+
+    * This is actually a media bug
+
+* [ Bug 1504512 double-free leading to crash everytime it find chunked stream ending with zero and sending data after that also](https://bugzilla.mozilla.org/show_bug.cgi?id=1504512)
+
+Junior
+
+* [Bug 1503736 - Origin header honors network.http.referer.hideOnionSource](https://bugzilla.mozilla.org/show_bug.cgi?id=1503736)
+
+* r+
+
+* [Bug 1504323 - Enable ESLint for netwerk/test/httpserver/](https://bugzilla.mozilla.org/show_bug.cgi?id=1504323)
+
+* land
+
+* [Bug 1504085 - HTTPS to HTTP loads should get an Origin header with "null"](https://bugzilla.mozilla.org/show_bug.cgi?id=1504085)
+
+* After discussion, we will make Origin: to honor RefererPolicy
+
+* [Bug 1321466 - XHR/fetch failed over HTTPS-proxy](https://bugzilla.mozilla.org/show_bug.cgi?id=1321466)
+
+* Can reproduce. Investigate.
