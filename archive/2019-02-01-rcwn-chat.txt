@@ -1,0 +1,21 @@
+(16:44:14) acreskey: We ran a test where I disabled RCWN (network.http.rcwn.enabled=false) for the raptor tp6 page load tests.
+(16:44:14) acreskey: The results are very significant performance gains over almost all sites:
+(16:44:14) acreskey: https://treeherder.mozilla.org/perf.html#/compare?originalProject=mozilla-inbound&newProject=try&newRevision=225ed801cc271e0902260fb443f6dd75da173d15&framework=10&showOnlyComparable=1&selectedTimeRange=1209600
+(16:44:14) acreskey: e.g. 14.72% drop in loadtime on google docs, windows10-64 pgo.
+(16:44:14) acreskey: In addition, the Noise Metric drops significantly (shown as red, but a drop is actually good).
+(16:44:14) acreskey: Who can I talk to about RCWN?
+(16:44:14) acreskey:  To me this is strong evidence that the heuristics could benefit from tuning.
+(16:45:09) acreskey: caveat: this is in the lab, so low network latency and also the http sessions are played back from recordings via mitmproxy.
+(16:45:09) acreskey: I don't yet know if this would hold up in the "real world."
+(17:01:52) stephend is now known as stephend|mtg
+(17:46:21) acreskey: valentin: ^^ ?
+(17:51:58) cmuresan left the room (quit: Quit: Instantbird 1.5 -- http://www.instantbird.com).
+(17:52:27) valentin: acreskey: that's interesting... indeed, lab conditions aren't the same as we see in the wild
+(17:53:09) valentin: and results might vary wildly between a SSD and HDD / windows and linux / broadband vs 3G
+(17:53:59) valentin: acreskey: bur you're right, it might be worth it to tune the parameters... that was the plan anyway, but we never got around to doing it
+(17:55:12) acreskey: Right, a whole lot of variables in play!
+(17:55:12) acreskey: Ok, my next step will be to try it on live sites, WebPageRelay or Browsertime or similar.
+(17:55:12) acreskey: I think it makes sense right now to go with the hammer of tuning: off or on
+(17:56:37) valentin: acreskey: yup, more testing is always welcome. we just looked at telemetry and it showed that it was marginally better or not worse...
+(17:56:58) valentin: there's definitely room for improvement. Thanks a lot for looking into this
+(17:57:44) acreskey: valentin: my pleasure! I'll let you  know what I find
