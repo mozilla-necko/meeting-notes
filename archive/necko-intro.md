@@ -1,0 +1,41 @@
+# Necko intro
+
+- Code generation: [IDL](https://firefox-source-docs.mozilla.org/xpcom/xpidl.html) and [IPDL](https://firefox-source-docs.mozilla.org/ipc/ipdl.html)
+    - Implementing an interface (C++/JS)
+        - threadsafety
+        - Macros [NS_IMPL_ISUPPORTS](https://searchfox.org/mozilla-central/source/xpcom/base/nsISupportsImpl.h#1426) / [individual implementations](https://searchfox.org/mozilla-central/rev/684aefab97202faa982dd898f1d99208a46f12b0/netwerk/base/nsAsyncStreamCopier.cpp#124-135) [manual implementations of QI](https://searchfox.org/mozilla-central/rev/684aefab97202faa982dd898f1d99208a46f12b0/netwerk/base/DefaultURI.cpp#280-315)
+        - ChromeUtils.generateQI [example](https://searchfox.org/mozilla-central/rev/684aefab97202faa982dd898f1d99208a46f12b0/netwerk/test/unit/test_bug1218029.js#70-97)
+        - QueryInterface - do_QueryInterface/do_QueryObject
+        - do_GetService, do_GetInstance
+        - [components.conf](https://searchfox.org/mozilla-central/rev/684aefab97202faa982dd898f1d99208a46f12b0/netwerk/build/components.conf#38)
+    - XPCONNECT (scriptable/builtin)
+    - [WebIDL](https://firefox-source-docs.mozilla.org/dom/bindings/webidl/index.html)
+        - Example [NetDashboard.webidl](https://searchfox.org/mozilla-central/rev/684aefab97202faa982dd898f1d99208a46f12b0/dom/chrome-webidl/NetDashboard.webidl) [used C++](https://searchfox.org/mozilla-central/rev/684aefab97202faa982dd898f1d99208a46f12b0/netwerk/base/Dashboard.cpp#541-546) [used JS](https://searchfox.org/mozilla-central/rev/684aefab97202faa982dd898f1d99208a46f12b0/toolkit/content/aboutNetworking.js#83-88)
+- Relevant interfaces
+    - nsISupports
+    - nsIRequest -> nsIChannel -> nsIHttpChannel
+    - nsIRequestObserver (onStart/onStopRequest)
+    - nsIStreamListener (onDataAvailable)
+    - nsIInputStream/nsIOutputStream
+    - loadInfo
+    - nsIObserver
+    - nsIIOService [idl](https://searchfox.org/mozilla-central/source/netwerk/base/nsIIOService.idl) [header](https://searchfox.org/mozilla-central/rev/684aefab97202faa982dd898f1d99208a46f12b0/netwerk/base/nsIOService.h#60,69) [impl](https://searchfox.org/mozilla-central/rev/684aefab97202faa982dd898f1d99208a46f12b0/netwerk/base/nsIOService.cpp#754-756) 
+- Preferences
+    - [all.js](https://searchfox.org/mozilla-central/source/modules/libpref/init/all.js)
+    - [firefox.js](https://searchfox.org/mozilla-central/source/browser/app/profile/firefox.js)
+    - [StaticPrefList.yaml](https://searchfox.org/mozilla-central/source/modules/libpref/init/StaticPrefList.yaml)
+- Testing
+    - `./mach try auto`
+    - `./mach try fuzzy netwerk/test/unit`
+    - `./mach try chooser`
+    - [xpcshell](https://firefox-source-docs.mozilla.org/testing/xpcshell/index.html) (we'll write a test doing a request, checking the responses, to illustrate how nsHttpChannel works)
+        - IPC xpcshell
+    - [mochitest](https://github.com/mdn/archived-content/blob/b7b6516b2b522533e8ba51cb944700ace7dace4d/files/en-us/mozilla/projects/mochitest/raw.html)
+    - [web-platform](https://firefox-source-docs.mozilla.org/web-platform/index.html)
+    - [gtest](https://firefox-source-docs.mozilla.org/gtest/index.html)
+    - [marionette](https://firefox-source-docs.mozilla.org/testing/marionette/index.html)
+- E10S (HttpChannelChild - HttpChannelParent)
+    - Fission (DocumentChannel)
+-   [NSPR]([https://firefox-source-docs.mozilla.org/nspr/about_nspr.html)
+-   [IPC](https://firefox-source-docs.mozilla.org/ipc/index.html)
+-   [NSS and PSM](https://firefox-source-docs.mozilla.org/security/nss/legacy/faq/index.html)
