@@ -19,7 +19,7 @@
     - nsIInputStream/nsIOutputStream
     - loadInfo
     - nsIObserver
-    - nsIIOService [idl](https://searchfox.org/mozilla-central/source/netwerk/base/nsIIOService.idl) [header](https://searchfox.org/mozilla-central/rev/684aefab97202faa982dd898f1d99208a46f12b0/netwerk/base/nsIOService.h#60,69) [impl](https://searchfox.org/mozilla-central/rev/684aefab97202faa982dd898f1d99208a46f12b0/netwerk/base/nsIOService.cpp#754-756) 
+    - nsIIOService [idl](https://searchfox.org/mozilla-central/source/netwerk/base/nsIIOService.idl) [header](https://searchfox.org/mozilla-central/rev/684aefab97202faa982dd898f1d99208a46f12b0/netwerk/base/nsIOService.h#60,69) [impl](https://searchfox.org/mozilla-central/rev/684aefab97202faa982dd898f1d99208a46f12b0/netwerk/base/nsIOService.cpp#754-756)
 - Preferences
     - [all.js](https://searchfox.org/mozilla-central/source/modules/libpref/init/all.js)
     - [firefox.js](https://searchfox.org/mozilla-central/source/browser/app/profile/firefox.js)
