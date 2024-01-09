@@ -1,0 +1,30 @@
+#!/usr/bin/env python3
+
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+# Author: Manuel Bucher <dev@manuelbucher.com>
+# Date: 2023-01-09
+
+import os
+
+def main():
+    summary = {}
+    for path, _, files in os.walk('.'):
+        summary[path.split('/', 1)[-1]] = files
+    dirs = list(summary.keys())
+    dirs.sort()
+    dirs.reverse()
+    print('# Summary')
+    for d in dirs:
+        summary[d].sort()
+        summary[d].reverse()
+        for file in summary[d]:
+            name = file.split('.')[0]
+            if not name.startswith('meeting'):
+                continue
+            print(f'[{name}]({d}/{file})')
+
+if __name__ == '__main__':
+    main()
