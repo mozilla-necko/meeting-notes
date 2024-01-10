@@ -9,7 +9,7 @@
 
 # Requirements:
 #  * python
-#  * wget
+#  * curl
 #  * pandoc
 
 set -euxo pipefail
