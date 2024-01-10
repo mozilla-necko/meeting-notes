@@ -10,21 +10,17 @@
 import os
 
 def main():
-    summary = {}
-    for path, _, files in os.walk('.'):
-        summary[path.split('/', 1)[-1]] = files
-    dirs = list(summary.keys())
-    dirs.sort()
-    dirs.reverse()
     print('# Summary')
-    for d in dirs:
-        summary[d].sort()
-        summary[d].reverse()
-        for file in summary[d]:
-            name = file.split('.')[0]
-            if not name.startswith('meeting'):
-                continue
-            print(f'[{name}]({d}/{file})')
+    files = os.listdir('archive')
+    files.sort()
+    files.reverse()
+    for file in files:
+        if not file.startswith('meeting-'):
+            continue
+        if not file.endswith('.md'):
+            continue
+        name = file.split('.')[0]
+        print(f'[{name}](./{file})')
 
 if __name__ == '__main__':
     main()

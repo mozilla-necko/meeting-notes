@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+# Author: Manuel Bucher <dev@manuelbucher.com>
+# Date: 2023-01-10
+
+# Requirements:
+#  * python
+#  * wget
+#  * pandoc
+
+set -euxo pipefail
+
+DATE="$(date +"%Y-%m-%d")"
+
+if [ $# -ne 0 ]; then
+	if [[ $1 == -* ]]; then
+	    echo "Usage $0 [meeting-note-date]"
+	    echo "If no meeting-note-date is provided, the current date ($DATE) is used"
+	    exit 1
+	fi
+	DATE="$1"
+fi
+
+OUTPUT_FILE="archive/meeting-${DATE}.md"
+
+current_date=$(date +"%Y-%m-%d %H:%M:%S")
+echo "Current Date: $current_date"
+
+# Download google doc as libreoffice document
+curl -L 'https://docs.google.com/document/d/1iLtlY45KY_KqU-CMBNQWpKBA8drD-8huj3WYBywcbWo/export?format=odt' > meeting-notes.odt
+# Convert to markdown
+pandoc --wrap=none -f odt -t commonmark_x -i meeting-notes.odt -o $OUTPUT_FILE
+
+# Regenerate index of meeting notes
+./summary > archive/SUMMARY.md
+
+# Write commit message, but ask for confirmation
+git add $OUTPUT_FILE
+git add archive/SUMMARY.md
+git commit -m "Add meeting notes from ${DATE}" -e
