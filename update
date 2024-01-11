@@ -15,6 +15,9 @@
 set -euxo pipefail
 
 DATE="$(date +"%Y-%m-%d")"
+# either odt or docx. Using docx due to
+# https://github.com/jgm/pandoc/issues/8924
+FORMAT="docx"
 
 if [ $# -ne 0 ]; then
 	if [[ $1 == -* ]]; then
@@ -31,9 +34,9 @@ current_date=$(date +"%Y-%m-%d %H:%M:%S")
 echo "Current Date: $current_date"
 
 # Download google doc as libreoffice document
-curl -L 'https://docs.google.com/document/d/1iLtlY45KY_KqU-CMBNQWpKBA8drD-8huj3WYBywcbWo/export?format=odt' > meeting-notes.odt
+curl -L 'https://docs.google.com/document/d/1iLtlY45KY_KqU-CMBNQWpKBA8drD-8huj3WYBywcbWo/export?format=docx' > "meeting-notes.${FORMAT}"
 # Convert to markdown
-pandoc --wrap=none -f odt -t commonmark_x -i meeting-notes.odt -o $OUTPUT_FILE
+pandoc --wrap=none -f "${FORMAT}" -t commonmark_x -i "meeting-notes.${FORMAT}" -o $OUTPUT_FILE
 
 # Regenerate index of meeting notes
 ./summary > archive/SUMMARY.md
