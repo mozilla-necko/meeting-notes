@@ -8,16 +8,18 @@
 # Date: 2023-01-10
 
 # Requirements:
+#
 #  * python
 #  * curl
 #  * pandoc
+#
+# Uses the latest download from the Download folder to extract the public
+# meeting notes from. The format should be docx, because of
+# https://stackoverflow.com/a/24896746, but odt works as well.
 
 set -euxo pipefail
 
 DATE="$(date +"%Y-%m-%d")"
-# either odt or docx. Using docx due to
-# https://github.com/jgm/pandoc/issues/8924
-FORMAT="docx"
 
 if [ $# -ne 0 ]; then
 	if [[ $1 == -* ]]; then
@@ -33,15 +35,58 @@ OUTPUT_FILE="archive/meeting-${DATE}.md"
 current_date=$(date +"%Y-%m-%d %H:%M:%S")
 echo "Current Date: $current_date"
 
-# Download google doc as libreoffice document
-curl -L "https://docs.google.com/document/d/1iLtlY45KY_KqU-CMBNQWpKBA8drD-8huj3WYBywcbWo/export?format=${FORMAT}" > "meeting-notes.${FORMAT}"
+# Use last downloaded file for meeting notes. If there is a newer file use `touch` on the
+# meeting notes to convert
+DOWNLOAD_DIR="$HOME/Downloads"
+INPUT_FILE="$DOWNLOAD_DIR/$(ls -Art $DOWNLOAD_DIR | tail -n 1)"
+
+# Remember whether the output file currently exist to create a meaningful commit message
+# for updates https://stackoverflow.com/a/24896746
+UPDATE=0
+[ -f "${OUTPUT_FILE}" ] || UPDATE=$?
+
 # Convert to markdown
-pandoc --wrap=none -f "${FORMAT}" -t commonmark_x -i "meeting-notes.${FORMAT}" -o $OUTPUT_FILE
+pandoc --wrap=none -t commonmark_x -i "${INPUT_FILE}" -o "meeting-notes.0.md"
+
+# extract part between "--- public ---" and "--- private ---"
+START="--- *public *---"
+END="--- *private *---"
+sed -n "/${START}/,/${END}/p" "meeting-notes.0.md" > meeting-notes.1.md
+
+# check whether the closing tag is missing, exit to prevent leaking information
+if [[ $(grep -- "${START}" meeting-notes.1.md | wc -l) -ge 2 ]]
+then
+  echo "End mark missing, make sure the ${START} has a matching ${END}"
+  exit 1
+fi
+
+# remove first and last line https://stackoverflow.com/a/10460956
+tail -n +2 meeting-notes.1.md | head -n -1 > meeting-notes.2.md
+
+cp meeting-notes.2.md "${OUTPUT_FILE}"
 
 # Regenerate index of meeting notes
 ./summary > archive/SUMMARY.md
 
-# Write commit message, but ask for confirmation
+# Add new files for next commit
 git add $OUTPUT_FILE
 git add archive/SUMMARY.md
-git commit -m "Add meeting notes from ${DATE}" -e
+
+# Show diff to commit for review
+git diff --staged --color=always | less -R
+
+# Write commit message, but ask for confirmation
+if [ -n "${UPDATE}" ]; then
+  git commit -m "Update meeting notes from ${DATE}" -e
+else
+  git commit -m "Add meeting notes from ${DATE}" -e
+fi
+
+# show the commit for last review before pushing
+git --no-pager show HEAD
+
+# https://stackoverflow.com/a/1885542
+read -p "upload changes? [y/N]?" CONT
+if [ "$CONT" = "y" ]; then
+  git push
+fi
