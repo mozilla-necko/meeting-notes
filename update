@@ -54,7 +54,8 @@ END="--- *private *---"
 sed -n "/${START}/,/${END}/p" "meeting-notes.0.md" > meeting-notes.1.md
 
 # check whether the closing tag is missing, exit to prevent leaking information
-if [[ $(grep -- "${START}" meeting-notes.1.md | wc -l) -ge 2 ]]
+# Either by having only a start, but no end. Or by reaching the next start/end tag
+if [[ $(grep -- "${START}" meeting-notes.1.md | wc -l) -ne 1 ]]
 then
   echo "End mark missing, make sure the ${START} has a matching ${END}"
   exit 1
