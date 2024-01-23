@@ -1,0 +1,74 @@
+#!/usr/bin/env python3
+
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+# Author: Manuel Bucher <dev@manuelbucher.com>
+# Date: 2024-01-23
+
+import sys
+import re
+import datetime
+
+# <p><strong>[2024-01-09] 2024 Edition! </strong></p></td>
+
+
+
+def main():
+    try:
+        _, inp = sys.argv
+    except:
+        print(f"usage: {sys.argv[0]} INPUT.md")
+        return
+    date = ""
+    extract = False
+    last_out = ""
+    out = {}
+    for line in open(inp):
+        public = '--- public ---' in line
+        private = '--- private ---' in line
+        if not extract:
+            if public and private:
+                continue
+            if public:
+                extract = True
+                continue
+            if private:
+                print("non-matching private tag")
+                return 1
+
+            # look for next section
+            if '[' in line:
+                new_date = line.split('[', 1)[1]
+                new_date = new_date.split(']', 1)[0]
+                try:
+                    new_date = datetime.datetime.strptime(new_date, '%Y-%m-%d')
+                except ValueError:
+                    continue
+                date = new_date.strftime("%Y-%m-%d")
+                last_out = last_out.strip()
+                if last_out != "":
+                    out[date] = last_out + "\n"
+                last_out = ""
+                print(date)
+        else:
+            if public and private:
+                print("public and private tag in public section")
+                return 1
+            elif public:
+                print("public tag in public section")
+                return 1
+            elif private:
+                extract = False
+            else:
+                last_out += line
+
+    # write all meeting notes to files
+    for day in out:
+        with open(f"archive/meeting-{day}.md", "w") as f:
+            f.write(out[day])
+
+if __name__ == '__main__':
+    sys.exit(main())
+
