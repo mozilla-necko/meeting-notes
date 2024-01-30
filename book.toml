@@ -7,3 +7,6 @@ title = "Weekly Necko Meeting Notes"
 
 [output.html.search]
 limit-results = 1000
+
+[preprocessor.summary]
+command = "./summary"

@@ -7,20 +7,39 @@
 # Author: Manuel Bucher <dev@manuelbucher.com>
 # Date: 2023-01-09
 
+# https://rust-lang.github.io/mdBook/format/configuration/preprocessors.html
+
 import os
+import sys
+import json
 
 def main():
-    print('# Summary')
+    if len(sys.argv) > 1 and sys.argv[1] == "supports":
+        return 0
+    context, book = json.load(sys.stdin)
+
     files = os.listdir('archive')
     files.sort()
     files.reverse()
+    new = []
     for file in files:
         if not file.startswith('meeting-'):
             continue
         if not file.endswith('.md'):
             continue
         name = file.split('.')[0]
-        print(f'[{name}](./{file})')
+        new.append( {"Chapter": {
+                "name": file[:-3],
+                "content": open(f'archive/{file}').read(),
+                "number": None,
+                "sub_items": [],
+                "path": file,
+                "source_path": file,
+                "parent_names": []
+        }})
+    book["sections"] = new + book["sections"]
+
+    print(json.dumps(book))
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())
