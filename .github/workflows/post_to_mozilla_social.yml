@@ -1,4 +1,4 @@
-name: Node.js Workflow
+name: Post to mozilla.social
 on:
   workflow_dispatch:
 
