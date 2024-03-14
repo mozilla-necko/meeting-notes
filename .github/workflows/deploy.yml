@@ -37,10 +37,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
-      - name: Send toot to Mastodon
-        uses: cbrgm/mastodon-github-action@v2
-        with:
-          access-token: ${{ secrets.MASTODON_ACCESS_TOKEN }} # access token
-          url: ${{ secrets.MASTODON_URL }} # https://example.social
-          message: "We just posted our weekly meeting notes. Check them out: https://mozilla-necko.github.io/meeting-notes/"
-
