@@ -27,3 +27,5 @@ The loaded profile will now contain the local symbols, and can be uploaded.
 Copy the path of the profiler URL. For example for https://profiler.firefox.com/public/bjts21vnqdn1xnvqtjy0dg6bcyab5eq2yabr4y8/ the path would be `/public/bjts...`
 
 Load https://deploy-preview-5190--perf-html.netlify.app + path above
+
+Or you can checkout flows without uploading by running `PROFILER_URL=https://deploy-preview-5190--perf-html.netlify.app/ samply load /tmp/profile.json`
