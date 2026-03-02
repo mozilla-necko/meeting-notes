@@ -1,7 +1,6 @@
 [book]
 authors = ["Mozilla Necko"]
 language = "en"
-multilingual = false
 src = "archive"
 title = "Weekly Necko Meeting Notes"
 
