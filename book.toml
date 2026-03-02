@@ -6,6 +6,7 @@ title = "Weekly Necko Meeting Notes"
 
 [output.html]
 site-url = "/meeting-notes/"
+git-repository-url = "https://github.com/mozilla-necko/meeting-notes"
 
 [output.html.search]
 limit-results = 1000

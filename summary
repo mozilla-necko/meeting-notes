@@ -16,6 +16,7 @@ import json
 def main():
     if len(sys.argv) > 1 and sys.argv[1] == "supports":
         return 0
+
     context, book = json.load(sys.stdin)
 
     files = os.listdir('archive')
@@ -38,9 +39,9 @@ def main():
                 "parent_names": []
         }})
 
-    # Handle case where sections key doesn't exist yet
-    existing_sections = book.get("sections", [])
-    book["sections"] = new + existing_sections
+    # Handle case where items key doesn't exist yet (mdbook uses "items" not "sections")
+    existing_items = book.get("items", [])
+    book["items"] = new + existing_items
 
     print(json.dumps(book))
 
