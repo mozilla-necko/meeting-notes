@@ -37,7 +37,10 @@ def main():
                 "source_path": file,
                 "parent_names": []
         }})
-    book["sections"] = new + book["sections"]
+
+    # Handle case where sections key doesn't exist yet
+    existing_sections = book.get("sections", [])
+    book["sections"] = new + existing_sections
 
     print(json.dumps(book))
 
