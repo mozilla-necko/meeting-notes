@@ -4,6 +4,9 @@ language = "en"
 src = "archive"
 title = "Weekly Necko Meeting Notes"
 
+[output.html]
+site-url = "/meeting-notes/"
+
 [output.html.search]
 limit-results = 1000
 
